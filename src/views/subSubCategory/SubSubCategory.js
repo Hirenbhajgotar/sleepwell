@@ -117,8 +117,8 @@ const SubSubCategories = () => {
                                     <tr key={item.id}>
                                         <th scope="row">{index + 1}</th>
                                         <td>{item.title}</td>
-                                        <td>{item.title}</td>
-                                        <td>{item.title}</td>
+                                        <td>{item.subCategory}</td>
+                                        <td>{item.category}</td>
                                         <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
                                         <td>
                                             <CLink className="btn btn-sm btn-outline-warning" to={`/sub-sub-category/edit/${item.id}`}>

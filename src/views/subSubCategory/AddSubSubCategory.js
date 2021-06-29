@@ -130,6 +130,7 @@ const AddSubSubCategory = () => {
         setLoading(true);
         const formData = new FormData();
         let status = isFeatured ? 1 : 0;
+        const addToHome = setInHome ? 1 : 0;
         formData.append('status', status);
         formData.append('title', value.title);
         formData.append('categoryId', value.categoryId);
@@ -138,7 +139,8 @@ const AddSubSubCategory = () => {
         formData.append('buttonText', buttonText);
         formData.append('buttonLink', buttonLink);
         formData.append('tagLine', description);
-        formData.append('setInHome', setInHome);
+        formData.append('sortOrder', shortOrder);
+        formData.append('addToHome', addToHome);
         formData.append('icon', icon);
 
         axios.post('http://markbran.in/apis/admin/subSubCategory', formData, {
@@ -314,7 +316,7 @@ const AddSubSubCategory = () => {
                                     </CCol>
                                     <CCol xl="6">
                                         <CFormGroup>
-                                            <CLabel htmlFor="category">Set in home</CLabel>
+                                            <CLabel htmlFor="category">Show in home</CLabel>
                                             <CInputGroup className="mb-3">
                                                 <Switch onChange={onChangeSetInHome} checked={setInHome} />
                                             </CInputGroup>

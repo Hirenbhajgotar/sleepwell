@@ -312,9 +312,9 @@ const _nav = [
     //* Home page 
     {
         _tag: 'CSidebarNavDropdown',
-        name: 'Home Page',
+        name: 'Home Management',
         // route: '/category-management',
-        icon: <i className="ri-shopping-bag-2-fill mr-3 ri-lg"></i>,
+        icon: <i class="ri-home-smile-2-fill mr-3 ri-lg"></i>,
         _children: [
             {
                 _tag: 'CSidebarNavItem',
@@ -339,7 +339,7 @@ const _nav = [
         _tag: 'CSidebarNavDropdown',
         name: 'Content Management',
         // route: '/category-management',
-        icon: <i className="ri-shopping-bag-2-fill mr-3 ri-lg"></i>,
+        icon: <i className="ri-bubble-chart-fill mr-3 ri-lg"></i>,
         _children: [
             {
                 _tag: 'CSidebarNavDropdown',
@@ -514,7 +514,7 @@ const _nav = [
         _tag: 'CSidebarNavDropdown',
         name: 'Coupon & Gift Management',
         // route: '/category-management',
-        icon: <i className="ri-shopping-bag-2-fill mr-3 ri-lg"></i>,
+        icon: <i className="ri-price-tag-3-fill mr-3 ri-lg"></i>,
         _children: [
             {
                 _tag: 'CSidebarNavItem',
@@ -532,7 +532,7 @@ const _nav = [
         _tag: 'CSidebarNavDropdown',
         name: 'Gift Card Management',
         // route: '/category-management',
-        icon: <i className="ri-shopping-bag-2-fill mr-3 ri-lg"></i>,
+        icon: <i className="ri-gift-2-fill mr-3 ri-lg"></i>,
         _children: [
             {
                 _tag: 'CSidebarNavItem',
@@ -555,7 +555,7 @@ const _nav = [
         _tag: 'CSidebarNavDropdown',
         name: 'Cities Management',
         // route: '/category-management',
-        icon: <i className="ri-shopping-bag-2-fill mr-3 ri-lg"></i>,
+        icon: <i className="ri-building-2-fill mr-3 ri-lg"></i>,
         _children: [
             {
                 _tag: 'CSidebarNavItem',
@@ -568,7 +568,7 @@ const _nav = [
         _tag: 'CSidebarNavDropdown',
         name: 'Section Management',
         // route: '/category-management',
-        icon: <i className="ri-shopping-bag-2-fill mr-3 ri-lg"></i>,
+        icon: <i className="ri-layout-masonry-fill mr-3 ri-lg"></i>,
         _children: [
             {
                 _tag: 'CSidebarNavItem',
@@ -581,7 +581,7 @@ const _nav = [
         _tag: 'CSidebarNavDropdown',
         name: 'Mattress selector',
         // route: '/category-management',
-        icon: <i className="ri-shopping-bag-2-fill mr-3 ri-lg"></i>,
+        icon: <i className="ri-store-2-fill mr-3 ri-lg"></i>,
         _children: [
             {
                 _tag: 'CSidebarNavItem',
@@ -599,7 +599,7 @@ const _nav = [
         _tag: 'CSidebarNavDropdown',
         name: 'Communication Management',
         // route: '/category-management',
-        icon: <i className="ri-shopping-bag-2-fill mr-3 ri-lg"></i>,
+        icon: <i className="ri-link-unlink mr-3 ri-lg"></i>,
         _children: [
             {
                 _tag: 'CSidebarNavItem',
@@ -622,7 +622,7 @@ const _nav = [
         _tag: 'CSidebarNavDropdown',
         name: 'Services',
         route: '/category-management',
-        icon: <i className="ri-shopping-bag-2-fill mr-3 ri-lg"></i>,
+        icon: <i className="ri-list-settings-fill mr-3 ri-lg"></i>,
         _children: [
             {
                 _tag: 'CSidebarNavItem',
@@ -645,7 +645,7 @@ const _nav = [
         _tag: 'CSidebarNavDropdown',
         name: 'Role Management',
         // route: '/category-management',
-        icon: <i className="ri-shopping-bag-2-fill mr-3 ri-lg"></i>,
+        icon: <i className="ri-user-settings-fill mr-3 ri-lg"></i>,
         _children: [
             {
                 _tag: 'CSidebarNavItem',

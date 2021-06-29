@@ -20,21 +20,21 @@ require('dotenv').config();
 
 
 const ComfortHome = () => {
-    const [banners, setBanners] = useState([]);
+    const [comforts, setComforts] = useState([]);
     const [showAlertSuccess, setShowAlertSuccess] = useState(false);
     const [showAlertDanger, setShowAlertDanger] = useState(false);
     const [messageText, setMessageText] = useState(null);
     const jwtToken = sessionStorage.getItem("token");
 
 
-    const clickOnDelete = (bannerId) => {
+    const clickOnDelete = (comfortId) => {
         confirmAlert({
             title: 'Are you sure?',
             message: 'You want to delete this item?',
             buttons: [
                 {
                     label: 'Yes, Delete it',
-                    onClick: () => deleteBanner(bannerId)
+                    onClick: () => deleteBanner(comfortId)
                 },
                 {
                     label: 'No',
@@ -45,9 +45,9 @@ const ComfortHome = () => {
     }
 
     //* call delete api
-    const deleteBanner = (bannerId) => {
-        // alert(bannerId)
-        axios.delete(`http://markbran.in/apis/admin/banner/${bannerId}`, {
+    const deleteBanner = (comfortId) => {
+        // alert(comfortId)
+        axios.delete(`http://markbran.in/apis/admin/comfort/${comfortId}`, {
             headers: {
                 "auth-token": jwtToken //the token is a variable which holds the token
             }
@@ -71,14 +71,14 @@ const ComfortHome = () => {
 
     //* get banner data
     const bannerAxios = () => {
-        axios.get('http://markbran.in/apis/admin/banner', {
+        axios.get('http://markbran.in/apis/admin/comfort', {
             headers: {
                 "auth-token": jwtToken //the token is a variable which holds the token
             }
         })
             .then(function (e) {
-                // console.log(e.data);
-                setBanners(e.data.banners);
+                console.log(e.data.comforts);
+                setComforts(e.data.comforts);
                 setShowAlertSuccess(false);
                 setShowAlertDanger(false);
             })
@@ -98,7 +98,7 @@ const ComfortHome = () => {
             <CCol xl={12}>
                 <CCard>
                     <CCardHeader>
-                        Banners
+                        Comforts
                         <CLink style={{ float: 'right' }} className="btn btn-success" to="/comfort-home/add">
                             Add comfort home
                         </CLink>
@@ -126,21 +126,23 @@ const ComfortHome = () => {
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Sub Title</th>
                                     <th scope="col">Image</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Description</th>
                                     <th scope="col">Create at</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {banners.map((item, index) =>
+                                {comforts.map((item, index) =>
                                     // {console.log(index)}
                                     <tr key={item._id}>
                                         <th scope="row">{index + 1}</th>
+                                        <th scope="row">
+                                            <img src={process.env.REACT_APP_BASE_URL + item.image} className="img-fluid" width="120px" alt="" />
+                                        </th>
                                         <th scope="row">{item.title}</th>
-                                        <th scope="row">{'sub title'}</th>
-                                        <td><img src={`${process.env.REACT_APP_BASE_URL}/${item.image}`} className="img-fluid" width="120px" alt="" /></td>
+                                        <th scope="row">{item.description}</th>
                                         <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
                                         <td>
                                             {/* <button type="button"  className="btn btn-sm btn-outline-warning">Edit</button> */}
