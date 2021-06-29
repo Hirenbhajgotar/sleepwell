@@ -34,7 +34,7 @@ const ComfortHome = () => {
             buttons: [
                 {
                     label: 'Yes, Delete it',
-                    onClick: () => deleteBanner(comfortId)
+                    onClick: () => deleteComfort(comfortId)
                 },
                 {
                     label: 'No',
@@ -45,7 +45,7 @@ const ComfortHome = () => {
     }
 
     //* call delete api
-    const deleteBanner = (comfortId) => {
+    const deleteComfort = (comfortId) => {
         // alert(comfortId)
         axios.delete(`http://markbran.in/apis/admin/comfort/${comfortId}`, {
             headers: {
@@ -54,15 +54,13 @@ const ComfortHome = () => {
         })
             .then(function (e) {
                 // console.log(response);
+                comfortAxios();
                 setShowAlertSuccess(true);
                 setShowAlertDanger(false);
                 // if (e.response && e.response.data.message) setMessageText(e.response.data.message)
-                bannerAxios();
 
             })
             .catch(function (e) {
-                // console.log(e.message);
-                // console.log(e.response.data.message);
                 setShowAlertSuccess(false);
                 setShowAlertDanger(true);
                 if (e.response && e.response.data.message) setMessageText(e.response.data.message)
@@ -70,7 +68,7 @@ const ComfortHome = () => {
     }
 
     //* get banner data
-    const bannerAxios = () => {
+    const comfortAxios = () => {
         axios.get('http://markbran.in/apis/admin/comfort', {
             headers: {
                 "auth-token": jwtToken //the token is a variable which holds the token
@@ -79,18 +77,16 @@ const ComfortHome = () => {
             .then(function (e) {
                 console.log(e.data.comforts);
                 setComforts(e.data.comforts);
-                setShowAlertSuccess(false);
-                setShowAlertDanger(false);
+                // setShowAlertSuccess(false);
+                // setShowAlertDanger(false);
             })
             .catch(function (error) {
-                // handle error
-                // console.log(error);
                 setShowAlertSuccess(false);
                 setShowAlertDanger(true);
             });
     }
     useEffect(() => {
-        bannerAxios();
+        comfortAxios();
     }, [])
 
     return (
@@ -136,7 +132,7 @@ const ComfortHome = () => {
                             <tbody>
                                 {comforts.map((item, index) =>
                                     // {console.log(index)}
-                                    <tr key={item._id}>
+                                    <tr key={item.id}>
                                         <th scope="row">{index + 1}</th>
                                         <th scope="row">
                                             <img src={process.env.REACT_APP_BASE_URL + item.image} className="img-fluid" width="120px" alt="" />
@@ -146,7 +142,7 @@ const ComfortHome = () => {
                                         <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
                                         <td>
                                             {/* <button type="button"  className="btn btn-sm btn-outline-warning">Edit</button> */}
-                                            <CLink className="btn btn-sm btn-outline-warning" to={`/banners/edit-banner/${item.id}`}>
+                                            <CLink className="btn btn-sm btn-outline-warning" to={`/comfort-home/edit/${item.id}`}>
                                                 Edit
                                             </CLink>
                                             <button type="button" onClick={() => clickOnDelete(item.id)} className="btn btn-sm btn-outline-danger">Delete</button>

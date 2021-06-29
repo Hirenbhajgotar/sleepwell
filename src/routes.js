@@ -143,6 +143,7 @@ const OfferBanner = React.lazy(() => import('./views/offerBanner/OfferBanner'));
 const AddOfferBanner = React.lazy(() => import('./views/offerBanner/AddOfferBanner'));
 const ComfortHome = React.lazy(() => import('./views/comfortHome/ComfortHome'));
 const AddComfortHome = React.lazy(() => import('./views/comfortHome/AddComfortHome'));
+const EditComfort = React.lazy(() => import('./views/comfortHome/EditComfort'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -295,6 +296,7 @@ const routes = [
   { path: '/offer-banner/add', name: 'Add Offer Banner', component: AddOfferBanner, exact: true },
   { path: '/comfort-home', name: 'Comfort Home', component: ComfortHome, exact: true },
   { path: '/comfort-home/add', name: 'Add Comfort Home', component: AddComfortHome, exact: true },
+  { path: '/comfort-home/edit/:id', name: 'Edit Comfort Home', component: EditComfort, exact: true },
 
 ];
 

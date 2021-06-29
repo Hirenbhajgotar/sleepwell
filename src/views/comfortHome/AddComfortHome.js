@@ -13,31 +13,33 @@ import {
     CInputGroup,
     CLabel,
     CRow,
-    CTextarea
 } from '@coreui/react'
-// import CIcon from '@coreui/icons-react'
-// import { DocsLink } from 'src/reusable'
 import Switch from "react-switch";
-import { Multiselect } from 'multiselect-react-dropdown';
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
-
-
+import CkEditor from '../../components/CkEditor5.js';
 import { useHistory } from 'react-router';
+
 const axios = require('axios').default;
 
+const schema = yup.object().shape({
+    title: yup.string().required(),
+    sortOrder: yup.number().positive(),
+});
 
 const AddComfortHome = () => {
-    const { control, handleSubmit, formState: { errors } } = useForm({ mode: 'all' });
-    let history = useHistory();
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [bannerImage, setBannerImage] = useState('');
-    const [isFeatured, setIsFeatured] = useState(true);
-    const [title, setTitle] = useState('');
+    const { register, control, handleSubmit, formState: { errors } } = useForm({ mode: 'all', resolver: yupResolver(schema) });
+
+    let   history                                 = useHistory();
+    const [error, setError]                       = useState(null);
+    const [loading, setLoading]                   = useState(false);
+    const [bannerImage, setBannerImage]           = useState('');
+    const [isFeatured, setIsFeatured]             = useState(true);
     const [bannerButtonText, setBannerButtonText] = useState('');
     const [bannerButtonLink, setBannerButtonLink] = useState('');
-    const [textMessage, setTextMessage] = useState('');
+    const [description, setDescription]           = useState('');
+
 
 
     const jwtToken = sessionStorage.getItem("token");
@@ -53,55 +55,50 @@ const AddComfortHome = () => {
     //* banner
     const bannerOnChange = (e) => {
         setBannerImage(e.target.files[0]);
-    }
-    //* title 
-    const titleOnChange = (e) => {
-        setTitle(e.target.value);
-    }
+    }    
     const onChangeIsFeatured = (e) => {
         setIsFeatured(e);
     }
-    
-
+    const handleDescription = (data) => {
+        setDescription(data);
+    }
     
     
     const onHandlerSubmit = (e) => {
-        e.preventDefault();
-        // console.log('value', value);
-        // console.log('bannerImage', bannerImage);
         setError(null);
         setLoading(true);
 
         const formData = new FormData();
+        const status = isFeatured ? 1: 0;
         formData.append('image', bannerImage);
-        formData.append('title', title);
+        formData.append('title', e.title);
         formData.append('buttonText', bannerButtonText);
         formData.append('buttonLink', bannerButtonLink);
-        formData.append('status', isFeatured);
-        // formData.append('content', content);
-        // console.log(formData);
+        formData.append('status', status);
+        formData.append('description', description);
+        formData.append('sortOrder', e.sortOrder);
         
-        // axios.post('http://markbran.in/apis/admin/banner', formData, {
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data',
-        //         "auth-token": jwtToken //the token is a variable which holds the token
+        axios.post('http://markbran.in/apis/admin/comfort', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                "auth-token": jwtToken //the token is a variable which holds the token
 
-        //     }
-        // })
-        // .then(response => {
-        //     setLoading(false);
-        //     // setUserSession(response.data.token, response.data.user);
-        //     history.push('/banners')
-        //     // console.log(response);
-        // })
-        // .catch(err => {
-        //     setLoading(false);
-        //     if (err.response && err.response.data.message) {
-        //         setError(err.response.data.message);
-        //     } else {
-        //         setError("Something went wrong!");
-        //     }
-        // });
+            }
+        })
+        .then(response => {
+            setLoading(false);
+            // setUserSession(response.data.token, response.data.user);
+            history.push('/comfort-home')
+            // console.log(response);
+        })
+        .catch(err => {
+            setLoading(false);
+            if (err.response && err.response.data.message) {
+                setError(err.response.data.message);
+            } else {
+                setError("Something went wrong!");
+            }
+        });
     }
     // console.log(errors);
     return (
@@ -113,7 +110,7 @@ const AddComfortHome = () => {
                             Add Comfort Home
                         </CCardHeader>
                         <CCardBody>
-                            <CForm encType="multipart/form-data" onSubmit={onHandlerSubmit}>
+                            <CForm encType="multipart/form-data" onSubmit={handleSubmit(onHandlerSubmit)}>
                                 <br />
                                 {
                                     error &&
@@ -126,19 +123,11 @@ const AddComfortHome = () => {
                                         <CFormGroup>
                                             <CLabel htmlFor="shortItem">Title</CLabel>
                                             <CInputGroup className="mb-3">
-                                                <CInput type="text" onChange={titleOnChange} value={title} placeholder="Title" autoComplete="title" />
+                                                <CInput {...register('title')} type="text" placeholder="Title" autoComplete="title" />
                                             </CInputGroup>
+                                            <CFormText className="help-block text-danger" color="red">{errors.title && errors.title.message}</CFormText>
                                         </CFormGroup>
                                     </CCol>
-                                    <CCol xl="6">
-                                        <CFormGroup>
-                                            <CLabel htmlFor="shortItem">Sub Title</CLabel>
-                                            <CInputGroup className="mb-3">
-                                                <CInput type="text" onChange={titleOnChange} value={title} placeholder="Title" autoComplete="title" />
-                                            </CInputGroup>
-                                        </CFormGroup>
-                                    </CCol>
-                                    
                                 </CRow>
                                 
                                 <CRow>
@@ -160,6 +149,15 @@ const AddComfortHome = () => {
                                     </CCol>
                                 </CRow>
                                 <CRow>
+                                    <CCol xl="6">
+                                        <CFormGroup>
+                                            <CLabel htmlFor="Short order">Sort Order</CLabel>
+                                            <CInputGroup>
+                                                <CInput type="text" {...register('sortOrder')} placeholder="Sort order" autoComplete="Sort order" />
+                                            </CInputGroup>
+                                            <CFormText className="help-block text-danger" color="red">{errors.sortOrder && errors.sortOrder.message}</CFormText>
+                                        </CFormGroup>
+                                    </CCol>
                                     <CCol xs="6">
                                         <CLabel htmlFor="category">Image</CLabel>
                                         <CInputGroup className="mb-3">
@@ -168,6 +166,14 @@ const AddComfortHome = () => {
                                             </CLabel>
                                             <CInputFile onChange={bannerOnChange} custom id="bannerImage" type="file" />
                                         </CInputGroup>
+                                    </CCol>
+                                </CRow>
+                                <CRow>
+                                    <CCol xl="12">
+                                        <CFormGroup>
+                                            <CLabel htmlFor="shortItem">Description</CLabel>
+                                            <CkEditor onEditorValue={handleDescription} />
+                                        </CFormGroup>
                                     </CCol>
                                 </CRow>
                                 <CRow>
@@ -180,21 +186,6 @@ const AddComfortHome = () => {
                                         </CFormGroup>
                                     </CCol>
                                 </CRow>
-                                {/* <CRow>
-                                    <CCol xl="8">
-                                        <CFormGroup>
-                                            <CLabel htmlFor="shortItem">Content</CLabel>
-                                            <CInputGroup className="mb-3">
-                                                <CTextarea
-                                                    // component="textarea"
-                                                    id="content"
-                                                    rows="3"
-                                                    onChange={contentOnChange} value={content}
-                                                ></CTextarea>
-                                            </CInputGroup>
-                                        </CFormGroup>
-                                    </CCol>
-                                </CRow> */}
                                 <CRow>
                                     <CCol xs="8">
                                         <button className="btn btn-success" disabled={loading ? true : false} type="submit">{loading ? 'Loading...' : 'Add comfort home'}</button>
