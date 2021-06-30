@@ -41,12 +41,13 @@ const EditComfort = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [isFeatured, setIsFeatured] = useState(false);
-    const [subCategoryImage, setSubCategoryImage] = useState('');
+    const [comfortsImage, setComfortsImage] = useState('');
     const [buttonText, setButtonText] = useState('');
     const [buttonLink, setButtonLink] = useState('');
     const [description, setDescription] = useState('');
     const [comforts, setComforts] = useState([]);
     const [shortOrder, setShortOrder] = useState('');
+    const [editorData, setEditorData] = useState('');
     // const [comfortsState, setComforts] = useState([]);
 
     let jwtToken = sessionStorage.getItem("token");
@@ -66,18 +67,14 @@ const EditComfort = () => {
         setButtonLink(e.target.value);
     }
 
-    //* category image
+    //* image
     const imageOnChange = (e) => {
-        setSubCategoryImage(e.target.files[0]);
+        setComfortsImage(e.target.files[0]);
     }
 
     const onChangeIsFeatured = (e) => {
         setIsFeatured(e);
     }
-
-    // const onChangeCateId = (e) => {
-    //     setCategoryId(e.target.value);
-    // }
 
     //* get comforts
     const getComfortsAxios = () => {
@@ -107,27 +104,27 @@ const EditComfort = () => {
             setValue("sortOrder", comforts.sortOrder)
         }
         setIsFeatured((comforts.status === 1 ? true : false));
-        setDescription(comforts.description);
+        setEditorData(comforts.description);
         setButtonText(comforts.buttonText);
         setButtonLink(comforts.buttonLink);
+        setShortOrder(comforts.sortOrder);
     }, [comforts.status, comforts.sortOrder, comforts.description, comforts.buttonText, comforts.buttonLink]);
 
     const onHandlerSubmit = (e) => {
         const formData = new FormData();
         let status = isFeatured ? 1 : 0;
         formData.append('status', status);
-        formData.append('categoryId', e.categoryId);
-        formData.append('subCategoryId', e.subCategoryId);
         formData.append('title', e.title);
-        formData.append('image', subCategoryImage);
+        formData.append('image', comfortsImage);
         formData.append('buttonText', buttonText);
         formData.append('buttonLink', buttonLink);
-        formData.append('tagLine', description);
-
+        formData.append('description', description);
+        formData.append('sortOrder', e.sortOrder);
+        // sort
         setError(null);
         setLoading(true);
 
-        axios.patch(`http://markbran.in/apis/admin/subSubCategory/${comfortId.id}`, formData, {
+        axios.patch(`http://markbran.in/apis/admin/comfort/${comfortId.id}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 "auth-token": jwtToken //the token is a variable which holds the token
@@ -135,7 +132,7 @@ const EditComfort = () => {
         })
             .then(response => {
                 setLoading(false);
-                history.push('/sub-sub-category')
+                history.push('/comfort-home')
             })
             .catch(err => {
                 setLoading(false);
@@ -194,8 +191,20 @@ const EditComfort = () => {
                                         <CFormGroup>
                                             <CLabel htmlFor="Short order">Short Order</CLabel>
                                             <CInputGroup>
-                                                <CInput type="text" onChange={handleShortOrderOnChange} value={shortOrder} placeholder="Sort order" autoComplete="Sort order" />
+                                                <Controller
+                                                    name="sortOrder"
+                                                    control={control}
+                                                    defaultValue={''}
+                                                    rules={{
+                                                        required: {
+                                                            value: true,
+                                                            message: "Title is required"
+                                                        },
+                                                    }}
+                                                    render={({ field }) => <CInput type="text" {...field} placeholder="Short order" autoComplete="Short order" />}
+                                                />
                                             </CInputGroup>
+                                            <CFormText className="help-block text-danger" color="red">{errors.sortOrder && errors.sortOrder.message}</CFormText>
                                         </CFormGroup>
                                     </CCol>
                                     <CCol xs="5">
@@ -233,7 +242,7 @@ const EditComfort = () => {
                                     <CCol xl="12">
                                         <CFormGroup>
                                             <CLabel htmlFor="shortItem">Description</CLabel>
-                                            <CkEditor onEditorValue={handleDescription} />
+                                            <CkEditor onEditorValue={handleDescription} editorValue={editorData} />
                                         </CFormGroup>
                                     </CCol>
                                 </CRow>

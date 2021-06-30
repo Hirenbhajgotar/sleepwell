@@ -38,15 +38,12 @@ const AddInnovation = () => {
     let history = useHistory();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    // const [isFeatured, setIsFeatured] = useState(false);
     const [innovationImage, setInnovationImage] = useState('');
-    // const [description, setDescription] = useState('');
     const [description, setDescription] = useState('');
     const [sectionDescription, setSectionDescription] = useState('');
     const [advantages, setAdvantages] = useState([]);
-    // const [inputList, setInputList] = useState([{ sectionHeading: "hiren", sectionImage: "", sectionDescription: "", advantagesArray: [] }]);
     const [inputList, setInputList] = useState([{ advantagesArray: [], status: true  }]);
-    const [asBanner, setAsBanner] = useState(false);
+    const [showInHome, setShowInHome] = useState(false);
     const [advantagesArray, setAdvantagesArray] = useState([]);
     const [isActive, setIsActive] = useState(true);
     let jwtToken = sessionStorage.getItem("token");
@@ -70,9 +67,9 @@ const AddInnovation = () => {
         // console.log(data)
         setDescription(data);
     }
-    const handleAsBannerOnchange = (data) => {
+    const handleShowInHomeOnchange = (data) => {
         // console.log(data)
-        setAsBanner(data);
+        setShowInHome(data);
     }
     
     //* change dynamic input fields   
@@ -135,27 +132,16 @@ const AddInnovation = () => {
     }, []);
 
     const onHandlerSubmit = (e) => {
-        // e.preventDefault();
-        console.log('value', inputList);
-        const innovationArray = [
-            { title: e.sectionTitle },
-            // { subTitle: e.sectionSubTitle },
-            { image: innovationImage },
-            { description: description },
-            { section: inputList }
-        ];
-        // console.log(innovationArray);
-        // innovationArray[
-        //     { title: e.sectionTitle},
-        // ];cl
         const formData = new FormData();
         // formData.append('innovationData', innovationArray);
         let status = isActive ? 1 : 0;
+        let homeCheckbox = showInHome ? 1 :  0; 
         formData.append('status', status);
         formData.append('title', e.sectionTitle);
         formData.append('image', innovationImage);
         formData.append('advantages', advantagesArray);
         formData.append('description', description);
+        formData.append('showInHome', homeCheckbox);
         // formData.append('isFeatured', isFeatured);
         // formData.append('sectionSubTitle', e.sectionSubTitle);
         // formData.append('rightDescription', e.rightDescription);
@@ -285,21 +271,21 @@ const AddInnovation = () => {
                                         </CFormGroup>
                                     </CCol>
                                 </CRow>
-                                {/* handleAsBannerOnchange */}
+                                {/* handleShowInHomeOnchange */}
                                 <CRow>
-                                    {/* <CCol xl="6">
-                                        <CFormGroup>
-                                            <CLabel htmlFor="is_active">Set as banner</CLabel>
-                                            <CInputGroup>
-                                                <Switch onChange={handleAsBannerOnchange} checked={asBanner} />
-                                            </CInputGroup>
-                                        </CFormGroup>
-                                    </CCol> */}
                                     <CCol xl="6">
                                         <CFormGroup>
                                             <CLabel htmlFor="is_active">Status</CLabel>
                                             <CInputGroup>
                                                 <Switch onChange={e => onChangeIsActive(e)} checked={isActive} />
+                                            </CInputGroup>
+                                        </CFormGroup>
+                                    </CCol>
+                                    <CCol xl="6">
+                                        <CFormGroup>
+                                            <CLabel htmlFor="is_active">Show in home</CLabel>
+                                            <CInputGroup>
+                                                <Switch onChange={handleShowInHomeOnchange} checked={showInHome} />
                                             </CInputGroup>
                                         </CFormGroup>
                                     </CCol>

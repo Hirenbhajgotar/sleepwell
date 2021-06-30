@@ -16,17 +16,13 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 let CkEditor5 = (props, ref) => {
     const editorValueRef = useRef();
-    
-
-
+   
     const editorOnChange = (event, editor) => {
         if (editor.getData()) {
             props.onEditorValue(editor.getData());
         }
-        
     }
-
-
+ 
     return (
         <div>
             <CRow>
@@ -53,22 +49,22 @@ let CkEditor5 = (props, ref) => {
 
                     <CKEditor
                         editor={ClassicEditor}
-                        data=""
-                        onReady={editor => {
-                            // You can store the "editor" and use when it is needed.
-                            console.log('Editor is ready to use!', editor);
-                        }}
+                        data={(props.editorValue ? props.editorValue : '')}
+                        // onReady={editor => {
+                        //     // You can store the "editor" and use when it is needed.
+                        //     console.log('Editor is ready to use!', editor);
+                        // }}
                         // onChange={(event, editor) => {
                         //     const data = editor.getData();
                         //     console.log({ event, editor, data });
                         // }}
                         onChange={editorOnChange}
-                        onBlur={(event, editor) => {
-                            console.log('Blur.', editor);
-                        }}
-                        onFocus={(event, editor) => {
-                            console.log('Focus.', editor);
-                        }}
+                        // onBlur={(event, editor) => {
+                        //     console.log('Blur.', editor);
+                        // }}
+                        // onFocus={(event, editor) => {
+                        //     console.log('Focus.', editor);
+                        // }}
                     />
                 </CCol>
             </CRow>

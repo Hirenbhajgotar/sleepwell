@@ -151,9 +151,9 @@ const AddComfortHome = () => {
                                 <CRow>
                                     <CCol xl="6">
                                         <CFormGroup>
-                                            <CLabel htmlFor="Short order">Sort Order</CLabel>
+                                            <CLabel htmlFor="Short order">Short Order</CLabel>
                                             <CInputGroup>
-                                                <CInput type="text" {...register('sortOrder')} placeholder="Sort order" autoComplete="Sort order" />
+                                                <CInput type="text" {...register('sortOrder')} placeholder="Short order" autoComplete="Short order" />
                                             </CInputGroup>
                                             <CFormText className="help-block text-danger" color="red">{errors.sortOrder && errors.sortOrder.message}</CFormText>
                                         </CFormGroup>

@@ -42,26 +42,21 @@ const EditAboutBanner = () => {
 
     //* get banner
     const getBannerAxios = () => {
-        axios.get(`http://markbran.in/apis/admin/aboutUsBanner/${bannerId.id}`, {
+        axios.get(`http://markbran.in/apis/admin/aboutUsBanner`, {
             headers: {
                 "auth-token": jwtToken //the token is a variable which holds the token
             }
         })
             .then(function (e) {
                 // handle success
-                console.log(e.data);
-                // setBanner(e.data.banner);
+                console.log(e.data.banner);
+                setBanner(e.data.banner);
             })
             .catch(function (error) {
                 if (error.response && error.response.data.message) setError(error.response.data.message);
             });
     }
-    useEffect(() => {
-        getBannerAxios();
-        setIsFeatured(banner.status);
-        setTitle(banner.title);
-        setDescription(banner.description);
-    }, [banner.status, banner.title, banner.description]);
+    
 
     const onChangeIsFeatured = (e) => {
         setIsFeatured(e);
@@ -80,7 +75,12 @@ const EditAboutBanner = () => {
         setBannerImage(e.target.files[0]);
     }
    
-
+    useEffect(() => {
+        getBannerAxios();
+        setIsFeatured((banner.status === 1 ? true : false));
+        setTitle(banner.title);
+        setDescription(banner.description);
+    }, [banner.status, banner.title, banner.description]);
     const onHandlerSubmit = (e) => {
         e.preventDefault();
         setError(null);
@@ -96,7 +96,7 @@ const EditAboutBanner = () => {
         // console.log(formData);
         // console.log(shortOrder);
 
-        axios.patch(`http://markbran.in/apis/admin/banner/${bannerId.id}`, formData, {
+        axios.patch(`http://markbran.in/apis/admin/aboutUsBanner/${banner.id}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 "auth-token": jwtToken //the token is a variable which holds the token
@@ -104,18 +104,13 @@ const EditAboutBanner = () => {
         })
             .then(response => {
                 setLoading(false);
-                history.push('/banners')
-                // console.log(response);
+                history.push('/about-us-banner')
             })
             .catch(err => {
                 setLoading(false);
                 console.log(err);
-                if (err.response) {
-                    if (err.response.data.message) {
-                        setError(err.response.data.message);
-                    } else {
-                        setError("Something went wrong!");
-                    }
+                if (err.response && err.response.data.message) {
+                    setError(err.response.data.message);
                 } else {
                     setError("Something went wrong!");
                 }

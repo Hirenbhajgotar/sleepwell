@@ -314,7 +314,7 @@ const _nav = [
         _tag: 'CSidebarNavDropdown',
         name: 'Home Management',
         // route: '/category-management',
-        icon: <i class="ri-home-smile-2-fill mr-3 ri-lg"></i>,
+        icon: <i className="ri-home-smile-2-fill mr-3 ri-lg"></i>,
         _children: [
             {
                 _tag: 'CSidebarNavItem',

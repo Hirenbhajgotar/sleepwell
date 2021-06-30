@@ -71,7 +71,7 @@ const AboutBanner = () => {
         })
             .then(function (response) {
                 setBanner(response.data.banner);
-                console.log(response.data.banner);
+                // console.log(response.data.banner);
             })
             .catch(function (error) {
                 if (error.response && error.response.data.message) {
