@@ -105,7 +105,7 @@ const About = () => {
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Title</th>
-                                    <th scope="col">Short Order</th>
+                                    <th scope="col">Sort Order</th>
                                     <th scope="col">Create at</th>
                                     <th scope="col">Action</th>
                                 </tr>

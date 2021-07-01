@@ -62,7 +62,7 @@ const AddBanner = () => {
     const titleOnChange = (e) => {
         setTitle(e.target.value);
     }
-    //* short order 
+    //* Sort Order 
     const shortOrderOnChange = (e) => {
         setShortOrder(e.target.value);
     }
@@ -96,7 +96,7 @@ const AddBanner = () => {
                     setError(error.response.data.message);
                 }
             });
-    } 
+    }
     useEffect(() => {
         axiosGetState();
     }, []);
@@ -117,7 +117,7 @@ const AddBanner = () => {
         formData.append('status', isFeatured);
         // formData.append('content', content);
         // console.log(formData);
-        
+
         axios.post('http://markbran.in/apis/admin/banner', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -125,20 +125,20 @@ const AddBanner = () => {
 
             }
         })
-        .then(response => {
-            setLoading(false);
-            // setUserSession(response.data.token, response.data.user);
-            history.push('/banners')
-            // console.log(response);
-        })
-        .catch(err => {
-            setLoading(false);
-            if (err.response && err.response.data.message) {
-                setError(err.response.data.message);
-            } else {
-                setError("Something went wrong!");
-            }
-        });
+            .then(response => {
+                setLoading(false);
+                // setUserSession(response.data.token, response.data.user);
+                history.push('/banners')
+                // console.log(response);
+            })
+            .catch(err => {
+                setLoading(false);
+                if (err.response && err.response.data.message) {
+                    setError(err.response.data.message);
+                } else {
+                    setError("Something went wrong!");
+                }
+            });
     }
     // console.log(errors);
     return (
@@ -177,7 +177,7 @@ const AddBanner = () => {
                                         </CInputGroup>
                                     </CCol>
                                 </CRow>
-                                
+
                                 <CRow>
                                     <CCol xl="6">
                                         <CFormGroup>
@@ -229,9 +229,9 @@ const AddBanner = () => {
                                 <CRow>
                                     <CCol xl="6">
                                         <CFormGroup>
-                                            <CLabel htmlFor="shortItem">Short Order</CLabel>
+                                            <CLabel htmlFor="shortItem">Sort Order</CLabel>
                                             <CInputGroup className="mb-3">
-                                                <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Short Order" autoComplete="short order" />
+                                                <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Sort Order" autoComplete="Sort Order" />
                                             </CInputGroup>
                                         </CFormGroup>
                                     </CCol>
@@ -241,7 +241,7 @@ const AddBanner = () => {
                                         <CFormGroup>
                                             <CLabel htmlFor="shortItem">Description</CLabel>
                                             <CInputGroup className="mb-3">
-                                                {/* <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Short Order" autoComplete="short order" /> */}
+                                                {/* <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Sort Order" autoComplete="Sort Order" /> */}
                                                 <CTextarea
                                                     // component="textarea"
                                                     id="content"

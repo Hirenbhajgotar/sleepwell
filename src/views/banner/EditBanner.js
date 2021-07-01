@@ -28,16 +28,16 @@ const EditBanner = () => {
     let bannerId = useParams();
     // console.log(bannerId);
     const { control, handleSubmit, formState: { errors } } = useForm({ mode: 'all' });
-    
-    let   history                       = useHistory();
-    const [error, setError]             = useState(null);
-    const [loading, setLoading]         = useState(false);
+
+    let history = useHistory();
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [bannerImage, setBannerImage] = useState('');
-    const [shortOrder, setShortOrder]   = useState('');
+    const [shortOrder, setShortOrder] = useState('');
     // const [content, setContent]         = useState('');
-    const [banner, setBanner]                     = useState([]);
-    const [title, setTitle]                       = useState('');
-    const [description, setDescription]           = useState('');
+    const [banner, setBanner] = useState([]);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
     const [bannerButtonText, setBannerButtonText] = useState('');
     const [bannerButtonLink, setBannerButtonLink] = useState('');
     const [isFeatured, setIsFeatured] = useState(true);
@@ -51,14 +51,14 @@ const EditBanner = () => {
                 "auth-token": jwtToken //the token is a variable which holds the token
             }
         })
-        .then(function (e) {
-            // handle success
-            // console.log(e.data.banner);
-            setBanner(e.data.banner);
-        })
-        .catch(function (error) {
-            if (error.response && error.response.data.message) setError(error.response.data.message);
-        });
+            .then(function (e) {
+                // handle success
+                // console.log(e.data.banner);
+                setBanner(e.data.banner);
+            })
+            .catch(function (error) {
+                if (error.response && error.response.data.message) setError(error.response.data.message);
+            });
     }
     useEffect(() => {
         getBannerAxios();
@@ -71,7 +71,7 @@ const EditBanner = () => {
         setBannerButtonText(banner.buttonText);
         setBannerButtonLink(banner.buttonLink);
     }, [banner.shortOrder, banner.status, banner.title, banner.description, banner.buttonText, banner.buttonLink]);
-    
+
     const onChangeIsFeatured = (e) => {
         setIsFeatured(e);
     }
@@ -95,7 +95,7 @@ const EditBanner = () => {
     const bannerOnChange = (e) => {
         setBannerImage(e.target.files[0]);
     }
-    //* short order 
+    //* Sort Order 
     const shortOrderOnChange = (e) => {
         setShortOrder(e.target.value);
     }
@@ -103,7 +103,7 @@ const EditBanner = () => {
     // const contentOnChange = (e) => {
     //     setContent(e.target.value);
     // }
-  
+
     const onHandlerSubmit = (e) => {
         e.preventDefault();
         setError(null);
@@ -120,31 +120,31 @@ const EditBanner = () => {
         // formData.append('content', content);
         // console.log(formData);
         // console.log(shortOrder);
-        
+
         axios.patch(`http://markbran.in/apis/admin/banner/${bannerId.id}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 "auth-token": jwtToken //the token is a variable which holds the token
             }
         })
-        .then(response => {
-            setLoading(false);
-            history.push('/banners')
-            // console.log(response);
-        })
-        .catch(err => {
-            setLoading(false);
-            console.log(err);
-            if (err.response) {
-                if (err.response.data.message) {
-                    setError(err.response.data.message);
+            .then(response => {
+                setLoading(false);
+                history.push('/banners')
+                // console.log(response);
+            })
+            .catch(err => {
+                setLoading(false);
+                console.log(err);
+                if (err.response) {
+                    if (err.response.data.message) {
+                        setError(err.response.data.message);
+                    } else {
+                        setError("Something went wrong!");
+                    }
                 } else {
                     setError("Something went wrong!");
                 }
-            } else {
-                setError("Something went wrong!");
-            }
-        });
+            });
     }
     // console.log(errors);
     return (
@@ -220,7 +220,7 @@ const EditBanner = () => {
                                 <CRow>
                                     <CCol xl="6">
                                         <CFormGroup>
-                                            <CLabel htmlFor="shortItem">Short Order</CLabel>
+                                            <CLabel htmlFor="shortItem">Sort Order</CLabel>
                                             <CInputGroup className="mb-3">
 
                                                 {/* <Controller
@@ -228,10 +228,10 @@ const EditBanner = () => {
                                                     control={control}
                                                     render={({ field }) => <CInput
                                                         {...field}
-                                                        type="text" placeholder="Short Order" autoComplete="short order"
+                                                        type="text" placeholder="Sort Order" autoComplete="Sort Order"
                                                     /> }
                                                 /> */}
-                                                <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Short Order" autoComplete="short order" />
+                                                <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Sort Order" autoComplete="Sort Order" />
                                             </CInputGroup>
                                         </CFormGroup>
                                     </CCol>
@@ -241,7 +241,7 @@ const EditBanner = () => {
                                         <CFormGroup>
                                             <CLabel htmlFor="shortItem">Description</CLabel>
                                             <CInputGroup className="mb-3">
-                                                {/* <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Short Order" autoComplete="short order" /> */}
+                                                {/* <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Sort Order" autoComplete="Sort Order" /> */}
                                                 <CTextarea
                                                     // component="textarea"
                                                     id="content"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from 'react'
+import React, { useState } from 'react'
 import {
     // CButton,
     CCard,
@@ -25,30 +25,36 @@ import {
 // import CIcon from '@coreui/icons-react'
 // import { DocsLink } from 'src/reusable'
 import { useForm, Controller } from 'react-hook-form';
-import { useHistory, useParams } from 'react-router';
+import { useHistory } from 'react-router';
 import Switch from "react-switch";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 const axios = require('axios').default;
 
+const schema = yup.object().shape({
+    title: yup.string().required(),
+});
 
+const AddServiceCard = () => {
+    const { control, handleSubmit, formState: { errors } } = useForm({ mode: 'all', resolver: yupResolver(schema) });
 
-const EditServiceActionCard = () => {
-    let categoryId = useParams();
-
-    const { control, handleSubmit, setValue, register, formState: { errors } } = useForm({ mode: 'all' });
     let history = useHistory();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [isFeatured, setIsFeatured] = useState(false);
-    const [categoryState, setCategoryState] = useState([]);
-    const [category, setCategory] = useState('');
     const [categoryImage, setCategoryImage] = useState('');
     const [buttonText, setButtonText] = useState('');
     const [buttonLink, setButtonLink] = useState('');
     const [description, setDescription] = useState('');
+    const [sortOrder, setSortOrder] = useState('');
 
     //* description
     const descriptionOnChange = (e) => {
         setDescription(e.target.value);
+    }
+    // *sort order
+    const sortOderOnChange = (e) => {
+        setSortOrder(e.target.value);
     }
     //* button text
     const buttonTextOnChange = (e) => {
@@ -64,92 +70,59 @@ const EditServiceActionCard = () => {
         setCategoryImage(e.target.files[0]);
     }
 
-    //* freatured category
     const onChangeIsFeatured = (e) => {
         setIsFeatured(e);
     }
 
-    // const categoryOnChange = (e) => {
-    //     setCategory(e.target.value);
-    // }
-
     let jwtToken = sessionStorage.getItem("token");
-    //* get category
-    const getCategoryAxios = () => {
-        axios.get(`http://markbran.in/apis/admin/category/${categoryId.id}`, {
-            headers: {
-                'auth-token': jwtToken
-            }
-        })
-            .then(function (response) {
-                setCategoryState(response.data.category);
-                console.log(response.data.category)
-            })
-            .catch(function (error) {
-                // handle error
-                if (error.response) {
-                    console.log(error.response.data);
-                }
-            });
-    }
-
-    useEffect(() => {
-        getCategoryAxios();
-        if (categoryState) {
-            setValue("category", categoryState.title)
-        }
-        setIsFeatured(categoryState.status);
-        setButtonLink(categoryState.buttonLink);
-        setButtonText(categoryState.buttonText);
-        setDescription(categoryState.description);
-
-    }, [categoryState.title, categoryState.status, categoryState.buttonLink, categoryState.buttonText, categoryState.description]);
-
     const onHandlerSubmit = (e) => {
+        // e.preventDefault();
+        // console.log('value', e);
         const formData = new FormData();
-        formData.append('status', isFeatured);
-        formData.append('title', e.category);
+        let status = isFeatured ? 1 : 0;
+        formData.append('status', status);
+        formData.append('title', e.title);
+        // formData.append('category', 'last long');
         formData.append('image', categoryImage);
         formData.append('buttonText', buttonText);
         formData.append('buttonLink', buttonLink);
         formData.append('description', description);
-        // console.log('value', value.categoryName);
-        setError(null);
-        setLoading(true);
+        // formData.append('status', 1);
 
-        axios.patch(`http://markbran.in/apis/admin/category/${categoryId.id}`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'auth-token': jwtToken
-            }
-        })
-            .then(response => {
-                setLoading(false);
-                history.push('/categories')
-                // console.log(response);
-            })
-            .catch(err => {
-                setLoading(false);
-                // console.log(err.response);
-                if (err.response) {
-                    if (err.response.data.errorMessage) {
-                        setError(err.response.data.errorMessage);
-                    } else {
-                        setError("Something went wrong!");
-                    }
-                } else {
-                    setError("Something went wrong!");
-                }
-            });
+
+        setError(null);
+        setLoading(true)
+
+        // axios.post('http://markbran.in/apis/admin/category', formData, {
+        //     headers: {
+        //         'Content-Type': 'multipart/form-data',
+        //         'auth-token': jwtToken
+        //     }
+        // })
+        //     .then(res => {
+        //         setLoading(false);
+        //         // setUserSession(response.data.token, response.data.user);
+        //         history.push('/categories')
+        //         console.log(res.response.data);
+        //     })
+        //     .catch(err => {
+        //         // console.log(err.response.data.message);
+        //         setLoading(false);
+        //         if (err.response && err.response.data.message) {
+        //             setError(err.response.data.message);
+        //         } else {
+        //             setError("Something went wrong!");
+        //         }
+        //     });
     }
 
     return (
-        <div>
+        <>
             <CRow>
                 <CCol xs="12" sm="12">
                     <CCard>
                         <CCardHeader>
-                            Edit service action
+                            Add service card
                         </CCardHeader>
                         <CCardBody>
                             <CForm onSubmit={handleSubmit(onHandlerSubmit)}>
@@ -172,7 +145,7 @@ const EditServiceActionCard = () => {
                                                     rules={{
                                                         required: {
                                                             value: true,
-                                                            message: "title is required"
+                                                            message: "Categoty is required"
                                                         },
                                                     }}
                                                     render={({ field }) => <CInput {...field} type="text" placeholder="Category" autoComplete="category" />}
@@ -181,18 +154,14 @@ const EditServiceActionCard = () => {
                                             <CFormText className="help-block text-danger" color="red">{errors.title && errors.title.message}</CFormText>
                                         </CFormGroup>
                                     </CCol>
-                                    <CCol xs="5">
-                                        <CLabel htmlFor="category">Category Image</CLabel>
+                                    <CCol xs="6">
+                                        <CLabel htmlFor="category">Image</CLabel>
                                         <CInputGroup className="mb-3">
                                             <CLabel htmlFor="categoryImage" variant="custom-file">
                                                 Choose image...
                                             </CLabel>
                                             <CInputFile onChange={categoryOnChange} custom id="categoryImage" type="file" />
                                         </CInputGroup>
-                                    </CCol>
-                                    <CCol xs="1">
-                                        {/* <img src={`${window.location.origin}/images/category/${categoryState.image}`} className="img-fluid" alt="" /> */}
-                                        <img src={`${window.location.origin}/${categoryState.image}`} className="img-fluid" alt="" />
                                     </CCol>
                                 </CRow>
                                 <CRow>
@@ -213,6 +182,17 @@ const EditServiceActionCard = () => {
                                         </CFormGroup>
                                     </CCol>
                                 </CRow>
+                                {/* sortOderOnChange */}
+                                <CRow>
+                                    <CCol xl="6">
+                                        <CFormGroup>
+                                            <CLabel htmlFor="Button Link">Sort Order</CLabel>
+                                            <CInputGroup>
+                                                <CInput type="text" onChange={sortOderOnChange} value={sortOrder} placeholder="Button Link" autoComplete="Button Link" />
+                                            </CInputGroup>
+                                        </CFormGroup>
+                                    </CCol>
+                                </CRow>
                                 <CRow>
                                     <CCol xl="12">
                                         <CFormGroup>
@@ -229,10 +209,10 @@ const EditServiceActionCard = () => {
                                     </CCol>
                                 </CRow>
                                 <CRow>
-                                    <CCol xl="8">
+                                    <CCol xl="6">
                                         <CFormGroup>
+                                            <CLabel htmlFor="category">Status</CLabel>
                                             <CInputGroup>
-                                                {/* <CSwitch onChange={switch2} checked={switchState} className={'mx-1'} color={'success'} defaultChecked variant="opposite" /> */}
                                                 <Switch onChange={onChangeIsFeatured} checked={isFeatured} />
                                             </CInputGroup>
                                         </CFormGroup>
@@ -240,7 +220,7 @@ const EditServiceActionCard = () => {
                                 </CRow>
                                 <CRow>
                                     <CCol xs="8">
-                                        <button className="btn btn-success" disabled={loading ? true : false} type="submit">{loading ? 'Loading...' : 'Update Category'}</button>
+                                        <button className="btn btn-success" disabled={loading ? true : false} type="submit">{loading ? 'Loading...' : 'Add card'}</button>
                                     </CCol>
                                 </CRow>
                             </CForm>
@@ -249,8 +229,8 @@ const EditServiceActionCard = () => {
                 </CCol>
             </CRow>
 
-        </div>
+        </>
     )
 }
 
-export default EditServiceActionCard
+export default AddServiceCard

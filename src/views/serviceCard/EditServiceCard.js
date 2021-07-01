@@ -31,7 +31,7 @@ const axios = require('axios').default;
 
 
 
-const EditServiceActionCard = () => {
+const EditServiceCard = () => {
     let categoryId = useParams();
 
     const { control, handleSubmit, setValue, register, formState: { errors } } = useForm({ mode: 'all' });
@@ -149,7 +149,7 @@ const EditServiceActionCard = () => {
                 <CCol xs="12" sm="12">
                     <CCard>
                         <CCardHeader>
-                            Edit service action
+                            Edit service card
                         </CCardHeader>
                         <CCardBody>
                             <CForm onSubmit={handleSubmit(onHandlerSubmit)}>
@@ -253,4 +253,4 @@ const EditServiceActionCard = () => {
     )
 }
 
-export default EditServiceActionCard
+export default EditServiceCard

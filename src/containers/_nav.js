@@ -1,4 +1,4 @@
-import React, { Fragment} from 'react'
+import React, { Fragment } from 'react'
 
 import CIcon from '@coreui/icons-react'
 
@@ -250,7 +250,7 @@ const _nav = [
     //   name: 'Add Product',
     //   to: '/500',
     // },
-   
+
     // {
     //   _tag: 'CSidebarNavItem',
     //   name: 'Disabled',
@@ -343,7 +343,7 @@ const _nav = [
         _children: [
             {
                 _tag: 'CSidebarNavDropdown',
-                name: 'About us',
+                name: 'About Us',
                 // to: '/about-us',
                 _children: [
                     // {
@@ -353,24 +353,24 @@ const _nav = [
                     // },
                     {
                         _tag: 'CSidebarNavItem',
-                        name: 'About us banner',
+                        name: 'About Us Banner',
                         to: '/about-us-banner',
                     },
                     {
                         _tag: 'CSidebarNavItem',
-                        name: 'About us card',
+                        name: 'About Us Card',
                         to: '/about-us-card',
                     },
                     {
                         _tag: 'CSidebarNavItem',
-                        name: 'going green',
+                        name: 'Going Green',
                         to: '/about-us-going-green',
                     },
                 ]
             },
             {
                 _tag: 'CSidebarNavItem',
-                name: 'Privacy policy',
+                name: 'Privacy Policy',
                 to: '/privacy-policy',
             },
             {
@@ -381,7 +381,7 @@ const _nav = [
             {
                 _tag: 'CSidebarNavDropdown',
                 name: 'FAQ’s',
-                _children : [
+                _children: [
                     {
                         _tag: 'CSidebarNavItem',
                         name: 'FAQ Category',
@@ -402,6 +402,11 @@ const _nav = [
             },
             {
                 _tag: 'CSidebarNavItem',
+                name: 'Return Policy',
+                to: '/return-policy',
+            },
+            {
+                _tag: 'CSidebarNavItem',
                 name: 'Warranty Terms',
                 to: '/warranty-terms',
             },
@@ -415,7 +420,7 @@ const _nav = [
         // route: '/banners-manaement',
         icon: <i className="ri-image-2-fill mr-3 ri-lg"></i>,
         _children: [
-            
+
             {
                 _tag: 'CSidebarNavItem',
                 name: 'Best seller',
@@ -507,7 +512,7 @@ const _nav = [
                 name: 'Products',
                 to: '/products',
             },
-            
+
         ],
     },
     {
@@ -579,7 +584,7 @@ const _nav = [
     },
     {
         _tag: 'CSidebarNavDropdown',
-        name: 'Mattress selector',
+        name: 'Mattress Selector',
         // route: '/category-management',
         icon: <i className="ri-store-2-fill mr-3 ri-lg"></i>,
         _children: [
@@ -626,13 +631,18 @@ const _nav = [
         _children: [
             {
                 _tag: 'CSidebarNavItem',
-                name: 'Home Page',
+                name: 'Banner',
                 to: '/service-homepage',
             },
             {
                 _tag: 'CSidebarNavItem',
-                name: 'Service action Cards',
+                name: 'Service Action Cards',
                 to: '/service-action',
+            },
+            {
+                _tag: 'CSidebarNavItem',
+                name: 'Service Cards',
+                to: '/service-card',
             },
             {
                 _tag: 'CSidebarNavItem',
@@ -657,7 +667,7 @@ const _nav = [
                 name: 'Permissions',
                 to: '/permision',
             },
-            
+
         ],
     },
     // {
@@ -697,7 +707,7 @@ const _nav = [
     //     to: '/add-product',
     //     icon: 'cil-user',
     // },
-    
+
 ]
 
 export default _nav

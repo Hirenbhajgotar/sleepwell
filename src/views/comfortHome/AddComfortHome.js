@@ -31,14 +31,14 @@ const schema = yup.object().shape({
 const AddComfortHome = () => {
     const { register, control, handleSubmit, formState: { errors } } = useForm({ mode: 'all', resolver: yupResolver(schema) });
 
-    let   history                                 = useHistory();
-    const [error, setError]                       = useState(null);
-    const [loading, setLoading]                   = useState(false);
-    const [bannerImage, setBannerImage]           = useState('');
-    const [isFeatured, setIsFeatured]             = useState(true);
+    let history = useHistory();
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [bannerImage, setBannerImage] = useState('');
+    const [isFeatured, setIsFeatured] = useState(true);
     const [bannerButtonText, setBannerButtonText] = useState('');
     const [bannerButtonLink, setBannerButtonLink] = useState('');
-    const [description, setDescription]           = useState('');
+    const [description, setDescription] = useState('');
 
 
 
@@ -55,21 +55,21 @@ const AddComfortHome = () => {
     //* banner
     const bannerOnChange = (e) => {
         setBannerImage(e.target.files[0]);
-    }    
+    }
     const onChangeIsFeatured = (e) => {
         setIsFeatured(e);
     }
     const handleDescription = (data) => {
         setDescription(data);
     }
-    
-    
+
+
     const onHandlerSubmit = (e) => {
         setError(null);
         setLoading(true);
 
         const formData = new FormData();
-        const status = isFeatured ? 1: 0;
+        const status = isFeatured ? 1 : 0;
         formData.append('image', bannerImage);
         formData.append('title', e.title);
         formData.append('buttonText', bannerButtonText);
@@ -77,7 +77,7 @@ const AddComfortHome = () => {
         formData.append('status', status);
         formData.append('description', description);
         formData.append('sortOrder', e.sortOrder);
-        
+
         axios.post('http://markbran.in/apis/admin/comfort', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -85,20 +85,20 @@ const AddComfortHome = () => {
 
             }
         })
-        .then(response => {
-            setLoading(false);
-            // setUserSession(response.data.token, response.data.user);
-            history.push('/comfort-home')
-            // console.log(response);
-        })
-        .catch(err => {
-            setLoading(false);
-            if (err.response && err.response.data.message) {
-                setError(err.response.data.message);
-            } else {
-                setError("Something went wrong!");
-            }
-        });
+            .then(response => {
+                setLoading(false);
+                // setUserSession(response.data.token, response.data.user);
+                history.push('/comfort-home')
+                // console.log(response);
+            })
+            .catch(err => {
+                setLoading(false);
+                if (err.response && err.response.data.message) {
+                    setError(err.response.data.message);
+                } else {
+                    setError("Something went wrong!");
+                }
+            });
     }
     // console.log(errors);
     return (
@@ -129,7 +129,7 @@ const AddComfortHome = () => {
                                         </CFormGroup>
                                     </CCol>
                                 </CRow>
-                                
+
                                 <CRow>
                                     <CCol xl="6">
                                         <CFormGroup>
@@ -151,9 +151,9 @@ const AddComfortHome = () => {
                                 <CRow>
                                     <CCol xl="6">
                                         <CFormGroup>
-                                            <CLabel htmlFor="Short order">Short Order</CLabel>
+                                            <CLabel htmlFor="Sort Order">Sort Order</CLabel>
                                             <CInputGroup>
-                                                <CInput type="text" {...register('sortOrder')} placeholder="Short order" autoComplete="Short order" />
+                                                <CInput type="text" {...register('sortOrder')} placeholder="Sort Order" autoComplete="Sort Order" />
                                             </CInputGroup>
                                             <CFormText className="help-block text-danger" color="red">{errors.sortOrder && errors.sortOrder.message}</CFormText>
                                         </CFormGroup>

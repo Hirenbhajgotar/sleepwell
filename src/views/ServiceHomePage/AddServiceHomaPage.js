@@ -14,7 +14,7 @@ import Section3Component from './Section3Component.js';
 
 
 const AddServiceHomePage = () => {
-   
+
     return (
         <div>
             <CRow>
@@ -25,8 +25,8 @@ const AddServiceHomePage = () => {
                         </CCardHeader>
                         <CCardBody>
                             <ServiceHomeBannerComponent />
-                            <ServiceHomeComponent />
-                            <Section3Component />
+                            {/* <ServiceHomeComponent />
+                            <Section3Component /> */}
                         </CCardBody>
                     </CCard>
                 </CCol>

@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState } from 'react'
 import {
     // CButton,
     CCard,
@@ -38,18 +38,23 @@ const schema = yup.object().shape({
 const AddServiceActionCard = () => {
     const { control, handleSubmit, formState: { errors } } = useForm({ mode: 'all', resolver: yupResolver(schema) });
 
-    let   history                           = useHistory();
-    const [error, setError]                 = useState(null);
-    const [loading, setLoading]             = useState(false);
-    const [isFeatured, setIsFeatured]       = useState(false);
+    let history = useHistory();
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [isFeatured, setIsFeatured] = useState(false);
     const [categoryImage, setCategoryImage] = useState('');
-    const [buttonText, setButtonText]       = useState('');
-    const [buttonLink, setButtonLink]       = useState('');
-    const [description, setDescription]     = useState('');
+    const [buttonText, setButtonText] = useState('');
+    const [buttonLink, setButtonLink] = useState('');
+    const [description, setDescription] = useState('');
+    const [sortOrder, setSortOrder] = useState('');
 
     //* description
     const descriptionOnChange = (e) => {
         setDescription(e.target.value);
+    }
+    // *sort order
+    const sortOderOnChange = (e) => {
+        setSortOrder(e.target.value);
     }
     //* button text
     const buttonTextOnChange = (e) => {
@@ -88,31 +93,31 @@ const AddServiceActionCard = () => {
         setError(null);
         setLoading(true)
 
-        axios.post('http://markbran.in/apis/admin/category', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'auth-token': jwtToken
-            }
-        })
-            .then(res => {
-                setLoading(false);
-                // setUserSession(response.data.token, response.data.user);
-                history.push('/categories')
-                console.log(res.response.data);
-            })
-            .catch(err => {
-                // console.log(err.response.data.message);
-                setLoading(false);
-                if (err.response && err.response.data.message) {
-                    setError(err.response.data.message);
-                } else {
-                    setError("Something went wrong!");
-                }
-            });
+        // axios.post('http://markbran.in/apis/admin/category', formData, {
+        //     headers: {
+        //         'Content-Type': 'multipart/form-data',
+        //         'auth-token': jwtToken
+        //     }
+        // })
+        //     .then(res => {
+        //         setLoading(false);
+        //         // setUserSession(response.data.token, response.data.user);
+        //         history.push('/categories')
+        //         console.log(res.response.data);
+        //     })
+        //     .catch(err => {
+        //         // console.log(err.response.data.message);
+        //         setLoading(false);
+        //         if (err.response && err.response.data.message) {
+        //             setError(err.response.data.message);
+        //         } else {
+        //             setError("Something went wrong!");
+        //         }
+        //     });
     }
 
     return (
-        <div>
+        <>
             <CRow>
                 <CCol xs="12" sm="12">
                     <CCard>
@@ -177,6 +182,17 @@ const AddServiceActionCard = () => {
                                         </CFormGroup>
                                     </CCol>
                                 </CRow>
+                                {/* sortOderOnChange */}
+                                <CRow>
+                                    <CCol xl="6">
+                                        <CFormGroup>
+                                            <CLabel htmlFor="Button Link">Sort Order</CLabel>
+                                            <CInputGroup>
+                                                <CInput type="text" onChange={sortOderOnChange} value={sortOrder} placeholder="Button Link" autoComplete="Button Link" />
+                                            </CInputGroup>
+                                        </CFormGroup>
+                                    </CCol>
+                                </CRow>
                                 <CRow>
                                     <CCol xl="12">
                                         <CFormGroup>
@@ -213,7 +229,7 @@ const AddServiceActionCard = () => {
                 </CCol>
             </CRow>
 
-        </div>
+        </>
     )
 }
 

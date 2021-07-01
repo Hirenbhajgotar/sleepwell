@@ -32,18 +32,18 @@ const schema = yup.object().shape({
 
 const AddSubSubCategory = () => {
     const { register, control, handleSubmit, formState: { errors } } = useForm({ mode: 'all', resolver: yupResolver(schema) });
-    
-    let   history                                 = useHistory();
-    const [error, setError]                       = useState(null);
-    const [loading, setLoading]                   = useState(false);
-    const [categories, setCategories]             = useState([]);
-    const [categoryId, setCategoryId]             = useState('');
-    const [isFeatured, setIsFeatured]             = useState(true);
+
+    let history = useHistory();
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [categoryId, setCategoryId] = useState('');
+    const [isFeatured, setIsFeatured] = useState(true);
     const [subSubCategoryImage, setSubSubCategoryImage] = useState('');
-    const [buttonText, setButtonText]             = useState('');
-    const [buttonLink, setButtonLink]             = useState('');
-    const [description, setDescription]           = useState('');
-    const [subCategories, setSubCategories]       = useState([]);
+    const [buttonText, setButtonText] = useState('');
+    const [buttonLink, setButtonLink] = useState('');
+    const [description, setDescription] = useState('');
+    const [subCategories, setSubCategories] = useState([]);
     const [icon, setIcon] = useState('');
     const [shortOrder, setShortOrder] = useState('');
     const [setInHome, setSetInHome] = useState(false);
@@ -59,7 +59,7 @@ const AddSubSubCategory = () => {
     }
     const handleShortOrderOnChange = (e) => {
         setShortOrder(e.target.value);
-    } 
+    }
     //* description
     const descriptionOnChange = (e) => {
         setDescription(e.target.value);
@@ -282,9 +282,9 @@ const AddSubSubCategory = () => {
                                     </CCol>
                                     <CCol xl="6">
                                         <CFormGroup>
-                                            <CLabel htmlFor="Short order">Short Order</CLabel>
+                                            <CLabel htmlFor="Sort Order">Sort Order</CLabel>
                                             <CInputGroup>
-                                                <CInput type="text" onChange={handleShortOrderOnChange} value={shortOrder} placeholder="Short order" autoComplete="Short order" />
+                                                <CInput type="text" onChange={handleShortOrderOnChange} value={shortOrder} placeholder="Sort Order" autoComplete="Sort Order" />
                                             </CInputGroup>
                                         </CFormGroup>
                                     </CCol>

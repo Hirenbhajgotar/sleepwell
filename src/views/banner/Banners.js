@@ -52,21 +52,21 @@ const Banners = () => {
                 "auth-token": jwtToken //the token is a variable which holds the token
             }
         })
-        .then(function (e) {
-            // console.log(response);
-            setShowAlertSuccess(true);
-            setShowAlertDanger(false);
-            // if (e.response && e.response.data.message) setMessageText(e.response.data.message)
-            bannerAxios();
+            .then(function (e) {
+                // console.log(response);
+                setShowAlertSuccess(true);
+                setShowAlertDanger(false);
+                // if (e.response && e.response.data.message) setMessageText(e.response.data.message)
+                bannerAxios();
 
-        })
-        .catch(function (e) {
-            // console.log(e.message);
-            // console.log(e.response.data.message);
-            setShowAlertSuccess(false);
-            setShowAlertDanger(true);
-            if (e.response && e.response.data.message) setMessageText(e.response.data.message)
-        })
+            })
+            .catch(function (e) {
+                // console.log(e.message);
+                // console.log(e.response.data.message);
+                setShowAlertSuccess(false);
+                setShowAlertDanger(true);
+                if (e.response && e.response.data.message) setMessageText(e.response.data.message)
+            })
     }
 
     //* get banner data
@@ -115,20 +115,20 @@ const Banners = () => {
                             </button>
                         </div> : null}
                         {showAlertDanger ? <div className="alert alert-warning alert-dismissible fade show" role="alert">
-                            <strong>Alert </strong> 
+                            <strong>Alert </strong>
                             {messageText}
                             <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div> : null}
-                        
+
                         <table className="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Banner title</th>
                                     <th scope="col">Banner</th>
-                                    <th scope="col">Short Order</th>
+                                    <th scope="col">Sort Order</th>
                                     <th scope="col">Create at</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -139,7 +139,7 @@ const Banners = () => {
                                 {banners.map((item, index) =>
                                     // {console.log(index)}
                                     <tr key={item._id}>
-                                        <th scope="row">{index+1}</th>
+                                        <th scope="row">{index + 1}</th>
                                         <th scope="row">{item.title}</th>
                                         <td><img src={`${process.env.REACT_APP_BASE_URL}/${item.image}`} className="img-fluid" width="120px" alt="" /></td>
                                         <td>{item.shortOrder}</td>

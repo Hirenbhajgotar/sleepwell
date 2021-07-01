@@ -152,11 +152,11 @@ const EditSubSubCategory = () => {
             setValue("categoryId", subSubCategory.categoryId)
             setValue("subCategoryId", subSubCategory.subCategoryId)
         }
-        setIsFeatured((subSubCategory.status === 1 ? true : false ));
+        setIsFeatured((subSubCategory.status === 1 ? true : false));
         setDescription(subSubCategory.tagLine);
         setButtonText(subSubCategory.buttonText);
         setButtonLink(subSubCategory.buttonLink);
-        setSetInHome((subSubCategory.addToHome === 1 ? true : false ));
+        setSetInHome((subSubCategory.addToHome === 1 ? true : false));
         setShortOrder(subSubCategory.sortOrder);
     }, [subSubCategory.isFeatured, subSubCategory.sortOrder, subSubCategory.addToHome, subSubCategory.tagLine, subSubCategory.buttonText, subSubCategory.buttonLink, subSubCategory.title, subSubCategory.categoryId, subSubCategory.subCategoryId]);
 
@@ -312,9 +312,9 @@ const EditSubSubCategory = () => {
                                 <CRow>
                                     <CCol xl="6">
                                         <CFormGroup>
-                                            <CLabel htmlFor="Short order">Short Order</CLabel>
+                                            <CLabel htmlFor="Sort Order">Sort Order</CLabel>
                                             <CInputGroup>
-                                                <CInput type="text" onChange={handleShortOrderOnChange} value={shortOrder} placeholder="Short order" autoComplete="Short order" />
+                                                <CInput type="text" onChange={handleShortOrderOnChange} value={shortOrder} placeholder="Sort Order" autoComplete="Sort Order" />
                                             </CInputGroup>
                                         </CFormGroup>
                                     </CCol>

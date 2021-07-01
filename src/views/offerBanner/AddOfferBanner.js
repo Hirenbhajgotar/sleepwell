@@ -34,6 +34,7 @@ const AddOfferBanner = () => {
     const [loading, setLoading] = useState(false);
     const [bannerImage, setBannerImage] = useState('');
     const [isFeatured, setIsFeatured] = useState(true);
+    const [showInHome, setShowInHome] = useState(false);
     const [title, setTitle] = useState('');
     const [stateArray, setStateArray] = useState();
     const [textMessage, setTextMessage] = useState('');
@@ -53,6 +54,9 @@ const AddOfferBanner = () => {
     
     const onChangeIsFeatured = (e) => {
         setIsFeatured(e);
+    }
+    const onChangeShowInHome = (e) => {
+        setShowInHome(e);
     }
     
 
@@ -157,6 +161,14 @@ const AddOfferBanner = () => {
                                             <CLabel htmlFor="category">Status</CLabel>
                                             <CInputGroup>
                                                 <Switch onChange={onChangeIsFeatured} checked={isFeatured} />
+                                            </CInputGroup>
+                                        </CFormGroup>
+                                    </CCol>
+                                    <CCol xl="6">
+                                        <CFormGroup>
+                                            <CLabel htmlFor="category">Show in home</CLabel>
+                                            <CInputGroup>
+                                                <Switch onChange={onChangeShowInHome} checked={showInHome} />
                                             </CInputGroup>
                                         </CFormGroup>
                                     </CCol>

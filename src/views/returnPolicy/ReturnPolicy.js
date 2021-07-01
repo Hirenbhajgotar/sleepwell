@@ -1,36 +1,39 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-import dateFormat from 'dateformat';
-
 import {
-    CBadge,
+    // CBadge,
     CCard,
     CCardBody,
     CCardHeader,
     CCol,
-    CDataTable,
+    // CDataTable,
     CRow,
-    CPagination,
+    // CPagination,
     CLink
 } from '@coreui/react'
-import { confirmAlert } from 'react-confirm-alert'; // Import
+import axios from 'axios'
+import dateFormat from 'dateformat'
+import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-const axios = require('axios').default;
-require('dotenv').config();
 
-
-const ServiceHomePage = () => {
-    const [banners, setBanners] = useState([]);
+const ReturnPolicy = () => {
+    const [termsConditionsResult, setTermsConditionsResult] = useState([])
     const [showAlertSuccess, setShowAlertSuccess] = useState(false);
     const [showAlertDanger, setShowAlertDanger] = useState(false);
-    const clickOnDelete = (bannerId) => {
+    const [textMessage, setTextMessage] = useState('');
+
+
+    let jwtToken = sessionStorage.getItem("token");
+
+    // 
+    const clickOnDelete = (sizeId) => {
         confirmAlert({
             title: 'Are you sure?',
             message: 'You want to delete this item?',
             buttons: [
                 {
                     label: 'Yes, Delete it',
-                    onClick: () => deleteBanner(bannerId)
+                    onClick: () => deleteSize(sizeId)
                 },
                 {
                     label: 'No',
@@ -39,54 +42,54 @@ const ServiceHomePage = () => {
             ]
         });
     }
-
     //* call delete api
-    const deleteBanner = (bannerId) => {
-        // alert(bannerId)
-        axios.delete(`/banner/${bannerId}`)
+    const deleteSize = (sizeId) => {
+        axios.delete(`/size/${sizeId}`)
             .then(function (response) {
-                // console.log(response);
                 setShowAlertSuccess(true);
                 setShowAlertDanger(false);
-                bannerAxios();
+                axiosCategories();
             })
             .catch(function (error) {
-                // console.log(error);
                 setShowAlertSuccess(false);
                 setShowAlertDanger(true);
             })
     }
 
-    //* get banner data
-    const bannerAxios = () => {
-        axios.get('/banner/')
+    const axiosCategories = () => {
+        axios.get('http://markbran.in/apis/admin/returnPolicy', {
+            headers: {
+                "auth-token": jwtToken //the token is a variable which holds the token
+            }
+        })
             .then(function (response) {
-                setBanners(response.data);
+                // setTermsConditionsResult(response.data.termsConditions);
+                console.log(response.data);
+                // console.log(response.data.termsConditions);
             })
             .catch(function (error) {
-                // handle error
-                console.log(error);
+                // console.log(error);
+                if (error.response && error.response.data.message) {
+                    setShowAlertSuccess(false);
+                    setShowAlertDanger(true);
+                    setTextMessage(error.response.data.message);
+                }
             });
     }
     useEffect(() => {
-        bannerAxios();
-    }, [])
-
+        axiosCategories();
+    }, []);
     return (
         <CRow>
             <CCol xl={12}>
                 <CCard>
                     <CCardHeader>
-                        Service home page
-                        <CLink style={{ float: 'right' }} className="btn btn-success" to="/service-homepage/add">
-                            Add
+                        Return Policy
+                        <CLink style={{ float: 'right' }} className="btn btn-success" to="/return-policy/add">
+                            Add return policy
                         </CLink>
-                        {/* <small  className="text-muted"> example</small> */}
                     </CCardHeader>
                     <CCardBody>
-                        {/* <CDataTable>
-
-                        </CDataTable> */}
                         {showAlertSuccess ? <div className="alert alert-success alert-dismissible fade show" role="alert">
                             <strong>Deleted</strong> Your item has been deleted successfully.
                             <button type="button" className="close" data-dismiss="alert" aria-label="Close">
@@ -94,42 +97,39 @@ const ServiceHomePage = () => {
                             </button>
                         </div> : null}
                         {showAlertDanger ? <div className="alert alert-warning alert-dismissible fade show" role="alert">
-                            <strong>Alert</strong> Something went wrong try again later !.
+                            <strong>Alert </strong> {textMessage ? textMessage : 'Something went wrong try again later !.'}
                             <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div> : null}
-
                         <table className="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Title</th>
-                                    <th scope="col">Sort Order</th>
+                                    <th scope="col">Description</th>
+                                    {/* <th scope="col">Is Active</th> */}
                                     <th scope="col">Create at</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* {var count = 1} */}
-                                {/* {setCount(+1)} */}
-                                {banners.map((item, index) =>
-                                    // {console.log(index)}
+                                {termsConditionsResult.map((item, index) =>
                                     <tr key={item._id}>
                                         <th scope="row">{index + 1}</th>
-                                        <th>lorem ipsum</th>
-                                        {/* <td><img src={`${window.location.origin}/images/banners/${item.bannerImage}`} className="img-fluid" width="120px" alt="" /></td> */}
-                                        <td>{item.shortOrder}</td>
-                                        <td>{dateFormat(item.date, "mmmm dS, yyyy")}</td>
+                                        <td>{item.title}</td>
+                                        <td>{item.description}</td>
+                                        {/* <td>{item.status ? 'Anabel' : 'Disable'}</td> */}
+                                        <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
                                         <td>
-                                            {/* <button type="button"  className="btn btn-sm btn-outline-warning">Edit</button> */}
-                                            <CLink className="btn btn-sm btn-outline-warning" to={`/edit-banner/${item._id}`}>
+                                            <CLink className="btn btn-sm btn-outline-warning" to={`/sizes/edit-size/${item._id}`}>
                                                 Edit
                                             </CLink>
-                                            <button type="button" onClick={() => clickOnDelete(item._id)} className="btn btn-sm btn-outline-danger">Delete</button>
+                                            <button onClick={() => clickOnDelete(item._id)} type="button" className="btn btn-sm btn-outline-danger">Delete</button>
                                         </td>
                                     </tr>
                                 )}
+
                             </tbody>
                         </table>
                     </CCardBody>
@@ -140,4 +140,4 @@ const ServiceHomePage = () => {
 
 }
 
-export default ServiceHomePage;
+export default ReturnPolicy;

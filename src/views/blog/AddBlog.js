@@ -67,7 +67,7 @@ const AddBlog = () => {
     // }
 
     const onHandlerSubmit = (e) => {
-        
+
 
         // e.preventDefault();
         // console.log('value', value);
@@ -153,19 +153,19 @@ const AddBlog = () => {
                                         </CFormGroup>
                                     </CCol>
                                 </CRow>
-                                
+
                                 <CRow>
                                     <CCol xl="12">
                                         <CFormGroup>
                                             <CLabel htmlFor="shortItem">Description</CLabel>
                                             <CInputGroup className="mb-3">
-                                                {/* <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Short Order" autoComplete="short order" /> */}
+                                                {/* <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Sort Order" autoComplete="Sort Order" /> */}
                                                 <CTextarea
                                                     {...register('description')}
                                                     // component="textarea"
                                                     id="content"
                                                     rows="3"
-                                                    // onChange={descriptionOnChange} value={description}
+                                                // onChange={descriptionOnChange} value={description}
                                                 ></CTextarea>
                                             </CInputGroup>
                                             <CFormText className="help-block text-danger" color="red">{errors.description && errors.description.message}</CFormText>

@@ -162,7 +162,7 @@ const EditComfort = () => {
                                         {error}
                                     </p>
                                 }
-                                
+
                                 <CRow>
                                     <CCol xs="6">
                                         <CFormGroup>
@@ -184,12 +184,12 @@ const EditComfort = () => {
                                             <CFormText className="help-block text-danger" color="red">{errors.title && errors.title.message}</CFormText>
                                         </CFormGroup>
                                     </CCol>
-                                    
+
                                 </CRow>
                                 <CRow>
                                     <CCol xl="6">
                                         <CFormGroup>
-                                            <CLabel htmlFor="Short order">Short Order</CLabel>
+                                            <CLabel htmlFor="Sort Order">Sort Order</CLabel>
                                             <CInputGroup>
                                                 <Controller
                                                     name="sortOrder"
@@ -201,7 +201,7 @@ const EditComfort = () => {
                                                             message: "Title is required"
                                                         },
                                                     }}
-                                                    render={({ field }) => <CInput type="text" {...field} placeholder="Short order" autoComplete="Short order" />}
+                                                    render={({ field }) => <CInput type="text" {...field} placeholder="Sort Order" autoComplete="Sort Order" />}
                                                 />
                                             </CInputGroup>
                                             <CFormText className="help-block text-danger" color="red">{errors.sortOrder && errors.sortOrder.message}</CFormText>

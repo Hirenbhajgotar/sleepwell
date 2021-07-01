@@ -102,8 +102,8 @@ const EditBlog = () => {
     }, [blog.title, blog.description, blog.author]);
 
 
-    
-    
+
+
     const onHandlerSubmit = (e) => {
         // e.preventDefault();
         setError(null);
@@ -136,10 +136,10 @@ const EditBlog = () => {
                 } else {
                     setError("Something went wrong!");
                 }
-                
+
             });
     }
-    
+
     return (
         <div>
             <CRow>
@@ -185,7 +185,7 @@ const EditBlog = () => {
                                             <CLabel htmlFor="blogImage" variant="custom-file">
                                                 Choose image...
                                             </CLabel>
-                                            
+
                                             <CInputFile onChange={bannerOnChange} custom id="blogImage" type="file" />
                                         </CInputGroup>
                                         {/* <CFormText className="help-block text-danger" color="red">{errors.categoryId && errors.categoryId.message}</CFormText> */}
@@ -222,7 +222,7 @@ const EditBlog = () => {
                                         <CFormGroup>
                                             <CLabel htmlFor="shortItem">Description</CLabel>
                                             <CInputGroup className="mb-3">
-                                                {/* <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Short Order" autoComplete="short order" /> */}
+                                                {/* <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Sort Order" autoComplete="Sort Order" /> */}
                                                 <Controller
                                                     name="description"
                                                     control={control}

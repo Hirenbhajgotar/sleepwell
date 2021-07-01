@@ -29,14 +29,14 @@ const EditAboutBanner = () => {
     // console.log(bannerId);
     const { control, handleSubmit, formState: { errors } } = useForm({ mode: 'all' });
 
-    let   history                       = useHistory();
-    const [error, setError]             = useState(null);
-    const [loading, setLoading]         = useState(false);
+    let history = useHistory();
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [bannerImage, setBannerImage] = useState('');
-    const [banner, setBanner]           = useState([]);
-    const [title, setTitle]             = useState('');
+    const [banner, setBanner] = useState([]);
+    const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [isFeatured, setIsFeatured]   = useState(true);
+    const [isFeatured, setIsFeatured] = useState(true);
 
     const jwtToken = sessionStorage.getItem("token");
 
@@ -56,7 +56,7 @@ const EditAboutBanner = () => {
                 if (error.response && error.response.data.message) setError(error.response.data.message);
             });
     }
-    
+
 
     const onChangeIsFeatured = (e) => {
         setIsFeatured(e);
@@ -65,7 +65,7 @@ const EditAboutBanner = () => {
     const titleOnChange = (e) => {
         setTitle(e.target.value);
     }
-    
+
     //* description 
     const descriptionOnChange = (e) => {
         setDescription(e.target.value);
@@ -74,7 +74,7 @@ const EditAboutBanner = () => {
     const bannerOnChange = (e) => {
         setBannerImage(e.target.files[0]);
     }
-   
+
     useEffect(() => {
         getBannerAxios();
         setIsFeatured((banner.status === 1 ? true : false));
@@ -174,7 +174,7 @@ const EditAboutBanner = () => {
                                         <CFormGroup>
                                             <CLabel htmlFor="shortItem">Description</CLabel>
                                             <CInputGroup className="mb-3">
-                                                {/* <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Short Order" autoComplete="short order" /> */}
+                                                {/* <CInput type="text" onChange={shortOrderOnChange} value={shortOrder} placeholder="Sort Order" autoComplete="Sort Order" /> */}
                                                 <CTextarea
                                                     // component="textarea"
                                                     id="content"
