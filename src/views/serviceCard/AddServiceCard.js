@@ -33,21 +33,26 @@ const axios = require('axios').default;
 
 const schema = yup.object().shape({
     title: yup.string().required(),
+    phone: yup.number().positive(),
 });
 
 const AddServiceCard = () => {
-    const { control, handleSubmit, formState: { errors } } = useForm({ mode: 'all', resolver: yupResolver(schema) });
+    const { control, register, handleSubmit, formState: { errors } } = useForm({ mode: 'all', resolver: yupResolver(schema) });
 
     let history = useHistory();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [isFeatured, setIsFeatured] = useState(false);
+    const [isFeatured, setIsFeatured] = useState(true);
     const [categoryImage, setCategoryImage] = useState('');
     const [buttonText, setButtonText] = useState('');
     const [buttonLink, setButtonLink] = useState('');
     const [description, setDescription] = useState('');
     const [sortOrder, setSortOrder] = useState('');
+    const [isGroup, setIsGroup] = useState(false);
 
+    const onChangeIsGroup = (e) => {
+        setIsGroup(e);
+    }
     //* description
     const descriptionOnChange = (e) => {
         setDescription(e.target.value);
@@ -188,8 +193,17 @@ const AddServiceCard = () => {
                                         <CFormGroup>
                                             <CLabel htmlFor="Button Link">Sort Order</CLabel>
                                             <CInputGroup>
-                                                <CInput type="text" onChange={sortOderOnChange} value={sortOrder} placeholder="Button Link" autoComplete="Button Link" />
+                                                <CInput type="text" onChange={sortOderOnChange} value={sortOrder} placeholder="Sort Order" autoComplete="Sort Order" />
                                             </CInputGroup>
+                                        </CFormGroup>
+                                    </CCol>
+                                    <CCol xl="6">
+                                        <CFormGroup>
+                                            <CLabel htmlFor="Button Link">Phone no.</CLabel>
+                                            <CInputGroup>
+                                                <CInput type="text" {...register('phone')} placeholder="Phone Number" autoComplete="Phone Number" />
+                                            </CInputGroup>
+                                            <CFormText className="help-block text-danger" color="red">{errors.phone && errors.phone.message}</CFormText>
                                         </CFormGroup>
                                     </CCol>
                                 </CRow>
@@ -214,6 +228,14 @@ const AddServiceCard = () => {
                                             <CLabel htmlFor="category">Status</CLabel>
                                             <CInputGroup>
                                                 <Switch onChange={onChangeIsFeatured} checked={isFeatured} />
+                                            </CInputGroup>
+                                        </CFormGroup>
+                                    </CCol>
+                                    <CCol xl="6">
+                                        <CFormGroup>
+                                            <CLabel htmlFor="category">Is Group</CLabel>
+                                            <CInputGroup>
+                                                <Switch onChange={onChangeIsGroup} checked={isGroup} />
                                             </CInputGroup>
                                         </CFormGroup>
                                     </CCol>
