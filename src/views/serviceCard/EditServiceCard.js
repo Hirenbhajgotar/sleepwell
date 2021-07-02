@@ -307,7 +307,7 @@ const EditServiceCard = () => {
                                 </CRow>
                                 <CRow>
                                     <CCol xs="8">
-                                        <button className="btn btn-success" disabled={loading ? true : false} type="submit">{loading ? 'Loading...' : 'Update Category'}</button>
+                                        <button className="btn btn-success" disabled={loading ? true : false} type="submit">{loading ? 'Loading...' : 'Update service card'}</button>
                                     </CCol>
                                 </CRow>
                             </CForm>
