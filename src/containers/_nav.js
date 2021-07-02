@@ -665,7 +665,7 @@ const _nav = [
             {
                 _tag: 'CSidebarNavItem',
                 name: 'Permissions',
-                to: '/permision',
+                to: '/permission',
             },
 
         ],

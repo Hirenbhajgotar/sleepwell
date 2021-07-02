@@ -122,18 +122,18 @@ const AboutGoingGreen = () => {
                             <thead>
                                 <tr>
                                     {/* <th scope="col">#</th> */}
-                                    <th scope="col">Title</th>
+                                    <th scope="col" width="15%">Title</th>
                                     <th scope="col">Image</th>
-                                    <th scope="col">Description</th>
+                                    <th scope="col" width="50%">Description</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Create at</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr key={goingGreen.id}>
-                                    <td>{goingGreen.title}</td>
-                                    <td><img src={process.env.REACT_APP_BASE_URL + goingGreen.image} alt="" /></td>
-                                    <td>{goingGreen.description}</td>
+                                    <td width="15%">{goingGreen.title}</td>
+                                    <td><img src={process.env.REACT_APP_BASE_URL + goingGreen.image} width="110px" alt="" /></td>
+                                    <td width="50%">{goingGreen.description}</td>
                                     <td>{goingGreen.status ? 'Enable' : 'Disable'}</td>
                                     <td>{dateFormat(goingGreen.createAt, "mmmm dS, yyyy")}</td>
                                     

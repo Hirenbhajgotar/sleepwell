@@ -43,12 +43,14 @@ const AddServiceCard = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [isFeatured, setIsFeatured] = useState(true);
-    const [categoryImage, setCategoryImage] = useState('');
+    const [cardImage, setCardImage] = useState('');
     const [buttonText, setButtonText] = useState('');
     const [buttonLink, setButtonLink] = useState('');
     const [description, setDescription] = useState('');
     const [sortOrder, setSortOrder] = useState('');
     const [isGroup, setIsGroup] = useState(false);
+
+    let jwtToken = sessionStorage.getItem("token");
 
     const onChangeIsGroup = (e) => {
         setIsGroup(e);
@@ -72,53 +74,52 @@ const AddServiceCard = () => {
 
     //* category image
     const categoryOnChange = (e) => {
-        setCategoryImage(e.target.files[0]);
+        setCardImage(e.target.files[0]);
     }
 
     const onChangeIsFeatured = (e) => {
         setIsFeatured(e);
     }
 
-    let jwtToken = sessionStorage.getItem("token");
     const onHandlerSubmit = (e) => {
         // e.preventDefault();
         // console.log('value', e);
         const formData = new FormData();
         let status = isFeatured ? 1 : 0;
+        let group = isGroup ? 1 : 0;
         formData.append('status', status);
+        formData.append('isGroup', group);
         formData.append('title', e.title);
-        // formData.append('category', 'last long');
-        formData.append('image', categoryImage);
+        // formData.append('phone', e.phone);
+        formData.append('image', cardImage);
         formData.append('buttonText', buttonText);
         formData.append('buttonLink', buttonLink);
         formData.append('description', description);
-        // formData.append('status', 1);
+        formData.append('sortOrder', sortOrder);
 
 
         setError(null);
         setLoading(true)
 
-        // axios.post('http://markbran.in/apis/admin/category', formData, {
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data',
-        //         'auth-token': jwtToken
-        //     }
-        // })
-        //     .then(res => {
-        //         setLoading(false);
-        //         // setUserSession(response.data.token, response.data.user);
-        //         history.push('/categories')
-        //         console.log(res.response.data);
-        //     })
-        //     .catch(err => {
-        //         // console.log(err.response.data.message);
-        //         setLoading(false);
-        //         if (err.response && err.response.data.message) {
-        //             setError(err.response.data.message);
-        //         } else {
-        //             setError("Something went wrong!");
-        //         }
-        //     });
+        axios.post('http://markbran.in/apis/admin/service-card', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'auth-token': jwtToken
+            }
+        })
+            .then(res => {
+                setLoading(false);
+                history.push('/service-card')
+            })
+            .catch(err => {
+                // console.log(err.response.data.message);
+                setLoading(false);
+                if (err.response && err.response.data.message) {
+                    setError(err.response.data.message);
+                } else {
+                    setError("Something went wrong!");
+                }
+            });
     }
 
     return (
@@ -162,10 +163,10 @@ const AddServiceCard = () => {
                                     <CCol xs="6">
                                         <CLabel htmlFor="category">Image</CLabel>
                                         <CInputGroup className="mb-3">
-                                            <CLabel htmlFor="categoryImage" variant="custom-file">
+                                            <CLabel htmlFor="cardImage" variant="custom-file">
                                                 Choose image...
                                             </CLabel>
-                                            <CInputFile onChange={categoryOnChange} custom id="categoryImage" type="file" />
+                                            <CInputFile onChange={categoryOnChange} custom id="cardImage" type="file" />
                                         </CInputGroup>
                                     </CCol>
                                 </CRow>
@@ -187,7 +188,6 @@ const AddServiceCard = () => {
                                         </CFormGroup>
                                     </CCol>
                                 </CRow>
-                                {/* sortOderOnChange */}
                                 <CRow>
                                     <CCol xl="6">
                                         <CFormGroup>

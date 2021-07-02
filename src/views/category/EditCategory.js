@@ -151,7 +151,7 @@ const EditCategory = () => {
                 <CCol xs="12" sm="12">
                     <CCard>
                         <CCardHeader>
-                            Add Category
+                            Edit Category
                         </CCardHeader>
                         <CCardBody>
                             <CForm onSubmit={handleSubmit(onHandlerSubmit)}>

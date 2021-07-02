@@ -57,7 +57,8 @@ const EditThickness = React.lazy(() => import('./views/thickness/EditThickness')
 const Banners       = React.lazy(() => import('./views/banner/Banners'));
 const AddBanners    = React.lazy(() => import('./views/banner/AddBanners'));
 const EditBanner    = React.lazy(() => import('./views/banner/EditBanner'));
-const Permision     = React.lazy(() => import('./views/permision/Permision'));
+const Permission     = React.lazy(() => import('./views/permision/Permission'));
+const AddPermission     = React.lazy(() => import('./views/permision/AddPermission'));
 const Newsletter    = React.lazy(() => import('./views/newsletter/Newsletter'));
 const Feedback      = React.lazy(() => import('./views/feedback/Feedback'));
 const Blog          = React.lazy(() => import('./views/blog/Blog'));
@@ -125,6 +126,7 @@ const AddServiceActionCard = React.lazy(() => import('./views/serviceAction/AddS
 const EditServiceActionCard = React.lazy(() => import('./views/serviceAction/EditServiceActionCard'));
 const ServiceHomePage = React.lazy(() => import('./views/ServiceHomePage/ServiceHomePage'));
 const AddServiceHomePage = React.lazy(() => import('./views/ServiceHomePage/AddServiceHomaPage'));
+const EditServiceBanner = React.lazy(() => import('./views/ServiceHomePage/EditServiceBanner'));
 const ServicePage = React.lazy(() => import('./views/servicePages/ServicePage'));
 const AddServicePage = React.lazy(() => import('./views/servicePages/AddServicePage'));
 const BestSeller = React.lazy(() => import('./views/bestSeller/BestSeller'));
@@ -215,7 +217,8 @@ const routes = [
   { path: '/banners', exact: true, name: 'Banner', component: Banners },
   { path: '/banners/add-banners', name: 'Add Banner', component: AddBanners },
   { path: '/banners/edit-banner/:id', name: 'Edit Banner', component: EditBanner },
-  { path: '/permision', exact: true, name: 'Permission', component: Permision },
+  { path: '/permission', exact: true, name: 'Permission', component: Permission },
+  { path: '/permission/add', exact: true, name: 'Add Permission', component: AddPermission },
   { path: '/newsletter', name: 'Newsletter', component: Newsletter },
   { path: '/feedback', name: 'Feedback', component: Feedback },
   { path: '/blogs', name: 'Blog', component: Blog },
@@ -283,6 +286,7 @@ const routes = [
   { path: '/service-action/edit/:id', name: 'Edit Service Action Card', component: EditServiceActionCard, exact: true },
   { path: '/service-homepage', name: 'Service home page', component: ServiceHomePage, exact: true },
   { path: '/service-homepage/add', name: 'Add service home page', component: AddServiceHomePage, exact: true },
+  { path: '/service-homepage/edit/:id', name: 'Edit service home page', component: EditServiceBanner, exact: true },
   { path: '/service-page', name: 'Service pages', component: ServicePage, exact: true },
   { path: '/service-page/add', name: 'Add service page', component: AddServicePage, exact: true },
   { path: '/best-seller', name: 'Best Seller', component: BestSeller, exact: true },

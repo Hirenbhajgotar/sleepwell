@@ -17,20 +17,23 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const ServiceCard = () => {
-    const [categories, setCategories] = useState([])
+    const [serviceCards, setServiceCards] = useState([])
     const [showAlertSuccess, setShowAlertSuccess] = useState(false);
     const [showAlertDanger, setShowAlertDanger] = useState(false);
+    const [textMessage, setTextMessage] = useState('');
+
+
     const jwtToken = sessionStorage.getItem("token");
 
     // 
-    const clickOnDelete = (categoryId) => {
+    const clickOnDelete = (serviceCardId) => {
         confirmAlert({
             title: 'Are you sure?',
             message: 'You want to delete this item?',
             buttons: [
                 {
                     label: 'Yes, Delete it',
-                    onClick: () => deleteCategory(categoryId)
+                    onClick: () => deleteCategory(serviceCardId)
                 },
                 {
                     label: 'No',
@@ -40,9 +43,8 @@ const ServiceCard = () => {
         });
     }
     //* call delete api
-    const deleteCategory = (categoryId) => {
-        // alert(categoryId)
-        axios.delete(`http://markbran.in/apis/admin/category/${categoryId}`, {
+    const deleteCategory = (serviceCardId) => {
+        axios.delete(`http://markbran.in/apis/admin/service-card/${serviceCardId}`, {
             headers: {
                 "auth-token": jwtToken //the token is a variable which holds the token
             }
@@ -51,28 +53,31 @@ const ServiceCard = () => {
                 setShowAlertSuccess(true);
                 setShowAlertDanger(false);
                 axiosCategories();
-                console.log(response);
+                // console.log(response);
             })
             .catch(function (error) {
                 setShowAlertSuccess(false);
                 setShowAlertDanger(true);
-                console.log(error);
+                setTextMessage(error.response.data.message);
             })
     }
 
     const axiosCategories = () => {
-        axios.get('http://markbran.in/apis/admin/category', {
+        axios.get('http://markbran.in/apis/admin/service-card', {
             headers: {
                 "auth-token": jwtToken //the token is a variable which holds the token
             }
         })
             .then(function (response) {
-                // console.log(response.data.categories);
-                setCategories(response.data.categories);
+                // console.log(response.data.cards);
+                setServiceCards(response.data.cards);
             })
             .catch(function (error) {
-                // handle error
-                console.log(error);
+                if (error.response && error.response.data.message) {
+                    setShowAlertSuccess(false);
+                    setShowAlertDanger(true);
+                    setTextMessage(error.response.data.message);
+                }
             });
     }
     useEffect(() => {
@@ -98,7 +103,7 @@ const ServiceCard = () => {
                             </button>
                         </div> : null}
                         {showAlertDanger ? <div className="alert alert-warning alert-dismissible fade show" role="alert">
-                            <strong>Alert</strong> Something went wrong try again later !.
+                            <strong>Alert </strong> {textMessage ? textMessage : 'Something went wrong try again later !.'}
                             <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -109,17 +114,19 @@ const ServiceCard = () => {
                                     <th scope="col">#</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Image</th>
-                                    <th scope="col">Create at</th>
+                                    <th scope="col" width="40%">Description</th>
+                                    <th scope="col">Sort Order</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {categories.map((item, index) =>
+                                {serviceCards.map((item, index) =>
                                     <tr key={item.id}>
                                         <th scope="row">{index + 1}</th>
                                         <td>{item.title}</td>
-                                        <td>image</td>
-                                        <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
+                                        <td><img src={`${process.env.REACT_APP_BASE_URL}${item.image}`} className="img-fluid" width="120px" alt="" /></td>
+                                        <td>{item.description}</td>
+                                        <td>{item.sortOrder}</td>
                                         <td>
                                             <CLink className="btn btn-sm btn-outline-warning" to={`/service-card/edit/${item.id}`}>
                                                 Edit
