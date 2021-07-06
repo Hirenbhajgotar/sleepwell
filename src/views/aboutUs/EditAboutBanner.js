@@ -104,7 +104,7 @@ const EditAboutBanner = () => {
         })
             .then(response => {
                 setLoading(false);
-                history.push('/about-us-banner')
+                history.push('/about-us-banner/edit')
             })
             .catch(err => {
                 setLoading(false);

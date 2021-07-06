@@ -33,7 +33,7 @@ const axios = require('axios').default;
 
 const schema = yup.object().shape({
     title: yup.string().required(),
-    phone: yup.number(),
+    phone: yup.number().positive().nullable(true).transform((v, o) => o === '' ? null : v)
 });
 
 const AddServiceCard = () => {

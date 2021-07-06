@@ -354,7 +354,7 @@ const _nav = [
                     {
                         _tag: 'CSidebarNavItem',
                         name: 'About Us Banner',
-                        to: '/about-us-banner',
+                        to: '/about-us-banner/edit',
                     },
                     {
                         _tag: 'CSidebarNavItem',

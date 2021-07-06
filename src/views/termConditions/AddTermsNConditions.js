@@ -48,7 +48,8 @@ const AddTernsNConditions = () => {
     const [title, setTitle] = useState('');
     const [editorData, setEditorData] = useState('');
 
-    const [inputList, setInputList] = useState([{ heading: "", sectionDescription: "", status: true }]);
+    // const [inputList, setInputList] = useState([{ heading: "", sectionDescription: "", status: true }]);
+    const [inputList, setInputList] = useState([]);
 
     let jwtToken = sessionStorage.getItem("token");
 
@@ -106,10 +107,12 @@ const AddTernsNConditions = () => {
         getTCAxios();
         if (termsConditions) {
             setValue("title", termsConditions.title)
+            // setInputList([{ heading: "haha1", refrename : "haha 1", status: true }, { heading: "haha2", sectionDescription: "haha 2", status: true }]);
+            setInputList(termsConditions.sections);
         }
         setIsActive(termsConditions.status);
         setEditorData(termsConditions.description);
-
+        console.log(termsConditions.sections);
     }, [termsConditions.description, termsConditions.status, termsConditions.title]);
 
     const onHandlerSubmit = (e) => {

@@ -77,6 +77,7 @@ const AboutUs = React.lazy(() => import('./views/aboutUs/About'));
 const AddAboutUs = React.lazy(() => import('./views/aboutUs/AddAbout'));
 const AddCards = React.lazy(() => import('./views/aboutUs/AddCards'));
 const AboutCard = React.lazy(() => import('./views/aboutUs/AboutCard'));
+const EditAboutCard = React.lazy(() => import('./views/aboutUs/EditAboutCard'));
 const AboutBanner = React.lazy(() => import('./views/aboutUs/AboutBanner'));
 const EditAboutBanner = React.lazy(() => import('./views/aboutUs/EditAboutBanner'));
 const AddAboutBanner = React.lazy(() => import('./views/aboutUs/AboutBannerComponent'));
@@ -236,14 +237,16 @@ const routes = [
   { path: '/states/add-states', name: 'Add States', component: AddStates, exact: true },
   { path: '/states/edit-states/:id', name: 'Edit States', component: EditStates, exact: true },
   { path: '/about-us', name: 'About Us', component: AboutUs, exact: true },
-  { path: '/about-us/add-about-us', name: 'Add About Us', component: AddAboutUs, exact: true },
+  { path: '/about-us-card/add-about-us', name: 'Add AboutUs Card', component: AddAboutUs, exact: true },
   { path: '/about-us/add-about-us/add-cards', name: 'Add Cards', component: AddCards, exact: true },
   { path: '/about-us-banner', name: 'About Banner', component: AboutBanner, exact: true },
-  { path: '/about-us-banner/edit/:id', name: 'Edit About Banner', component: EditAboutBanner, exact: true },
+  // { path: '/about-us-banner/edit/:id', name: 'Edit About Banner', component: EditAboutBanner, exact: true },
+  { path: '/about-us-banner/edit', name: 'Edit About Banner', component: EditAboutBanner, exact: true },
   { path: '/about-us-banner/add', name: 'About Banner', component: AddAboutBanner, exact: true },
   { path: '/about-us-going-green', name: 'About Going Green', component: AboutGoinGreen, exact: true },
   { path: '/about-us-going-green/add', name: 'Add About Going Green', component: AddAboutGoingGreen, exact: true },
   { path: '/about-us-card', name: 'About Card', component: AboutCard, exact: true },
+  { path: '/about-us-card/edit/:id', name: 'Edit About Card', component: EditAboutCard, exact: true },
   { path: '/privacy-policy', name: 'Privacy Policy', component: PrivacyPolicy, exact: true },
   { path: '/privacy-policy/add', name: 'Add Privacy Policy', component: AddPrivacyPolicy, exact: true },
   { path: '/privacy-policy/edit/:id', name: 'Edit Privacy Policy', component: EditPrivacyPolicy, exact: true },

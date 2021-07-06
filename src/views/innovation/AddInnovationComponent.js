@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     // CButton,
     CCard,
@@ -41,13 +41,44 @@ const AddInnovationComponent = () => {
     const handleDescription = (data) => {
         setDescription(data);
     }
+    const getInnovationAxios = () => {
+        axios.get(`http://markbran.in/apis/admin/innovation`, {
+            headers: {
+                "auth-token": jwtToken //the token is a variable which holds the token
+            }
+        })
+            .then(function (response) {
+                console.log(response.data.innovation);
+                // setTermsConditions(response.data.termsConditions);
+                setError(null);
+            })
+            .catch(function (err) {
+                // handle error
+                if (err.response && err.response.data.message) {
+                    setError(err.response.data.message);
+                } else {
+                    setError("Something went wrong!");
+                }
+            });
+    }
+    useEffect(() => {
+        getInnovationAxios();
+        // if (termsConditions) {
+        //     setValue("title", termsConditions.title)
+        //     // setInputList([{ heading: "haha1", refrename : "haha 1", status: true }, { heading: "haha2", sectionDescription: "haha 2", status: true }]);
+        //     setInputList(termsConditions.sections);
+        // }
+        // setIsActive(termsConditions.status);
+        // setEditorData(termsConditions.description);
+        // console.log(termsConditions.sections);
+    }, []);
 
     const onHandlerSubmit = (e) => {
         
         const formData = new FormData();
         formData.append('title', e.title);
         formData.append('description', description);
-
+        
         setError(null);
         // setLoading(true)
 

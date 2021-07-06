@@ -3,7 +3,10 @@ import { useHistory, useLocation } from 'react-router-dom'
 import dateFormat from 'dateformat';
 
 import {
-    CBadge,
+    CFormGroup,
+    CInputGroup,
+    CFormText,
+    CLabel,
     CCard,
     CCardBody,
     CCardHeader,
@@ -15,22 +18,34 @@ import {
 } from '@coreui/react'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import CkEditor from '../../components/CkEditor5.js';
+import CardComponent from './AboutUsCardComponent.js';
 const axios = require('axios').default;
 require('dotenv').config();
 
 
 const AboutCard = () => {
-    const [banners, setBanners] = useState([]);
+    const [aboutUsCard, setAboutUsCard] = useState([]);
     const [showAlertSuccess, setShowAlertSuccess] = useState(false);
     const [showAlertDanger, setShowAlertDanger] = useState(false);
-    const clickOnDelete = (bannerId) => {
+    const [sectionDescription, setSectionDescription] = useState('');
+    const [textMessage, setTextMessage] = useState('');
+
+    const jwtToken = sessionStorage.getItem("token");
+
+
+    const handleSectionDescription = (data) => {
+        setSectionDescription(data);
+    }
+
+    const clickOnDelete = (cardId) => {
         confirmAlert({
             title: 'Are you sure?',
             message: 'You want to delete this item?',
             buttons: [
                 {
                     label: 'Yes, Delete it',
-                    onClick: () => deleteBanner(bannerId)
+                    onClick: () => deleteBanner(cardId)
                 },
                 {
                     label: 'No',
@@ -41,31 +56,41 @@ const AboutCard = () => {
     }
 
     //* call delete api
-    const deleteBanner = (bannerId) => {
-        // alert(bannerId)
-        axios.delete(`/banner/${bannerId}`)
+    const deleteBanner = (cardId) => {
+        // alert(cardId)
+        axios.delete(`http://markbran.in/apis/admin/aboutUsCard/${cardId}`, {
+            headers: {
+                "auth-token": jwtToken //the token is a variable which holds the token
+            }
+        })
             .then(function (response) {
-                // console.log(response);
                 setShowAlertSuccess(true);
                 setShowAlertDanger(false);
                 bannerAxios();
             })
             .catch(function (error) {
-                // console.log(error);
                 setShowAlertSuccess(false);
                 setShowAlertDanger(true);
+                setTextMessage(error.response.data.message);
             })
     }
 
     //* get banner data
     const bannerAxios = () => {
-        axios.get('/banner/')
+        axios.get('http://markbran.in/apis/admin/aboutUsCard', {
+            headers: {
+                "auth-token": jwtToken //the token is a variable which holds the token
+            }
+        })
             .then(function (response) {
-                setBanners(response.data);
+                setAboutUsCard(response.data.cards);
+                console.log(response.data.cards);
             })
             .catch(function (error) {
-                // handle error
-                console.log(error);
+
+                setShowAlertSuccess(false);
+                setShowAlertDanger(true);
+                setTextMessage(error.response.data.message);
             });
     }
     useEffect(() => {
@@ -78,11 +103,17 @@ const AboutCard = () => {
                 <CCard>
                     <CCardHeader>
                         About Us
-                        <CLink style={{ float: 'right' }} className="btn btn-success" to="/about-us/add-about-us">
+                        <CLink style={{ float: 'right' }} className="btn btn-success" to="/about-us-card/add-about-us">
                             Add Content
                         </CLink>
                         {/* <small  className="text-muted"> example</small> */}
                     </CCardHeader>
+                    <CCardBody>
+                        <div>
+                            <CardComponent />
+                            
+                        </div>
+                    </CCardBody>
                     <CCardBody>
                         {/* <CDataTable>
 
@@ -94,39 +125,36 @@ const AboutCard = () => {
                             </button>
                         </div> : null}
                         {showAlertDanger ? <div className="alert alert-warning alert-dismissible fade show" role="alert">
-                            <strong>Alert</strong> Something went wrong try again later !.
+                            <strong>Alert </strong> {textMessage ? textMessage : 'Something went wrong try again later !.'}
                             <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div> : null}
-
+                        
                         <table className="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Title</th>
+                                    <th scope="col">Tagline</th>
                                     <th scope="col">Sort Order</th>
                                     <th scope="col">Create at</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* {var count = 1} */}
-                                {/* {setCount(+1)} */}
-                                {banners.map((item, index) =>
-                                    // {console.log(index)}
-                                    <tr key={item._id}>
+                                {aboutUsCard.map((item, index) =>
+                                    <tr key={item.id}>
                                         <th scope="row">{index + 1}</th>
-                                        <th>lorem ipsum</th>
-                                        {/* <td><img src={`${window.location.origin}/images/banners/${item.bannerImage}`} className="img-fluid" width="120px" alt="" /></td> */}
-                                        <td>{item.shortOrder}</td>
-                                        <td>{dateFormat(item.date, "mmmm dS, yyyy")}</td>
+                                        <th>{item.title}</th>
+                                        <td width="50%">{item.tagLine}</td>
+                                        <td>{item.sortOrder}</td>
+                                        <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
                                         <td>
-                                            {/* <button type="button"  className="btn btn-sm btn-outline-warning">Edit</button> */}
-                                            <CLink className="btn btn-sm btn-outline-warning" to={`/edit-banner/${item._id}`}>
+                                            <CLink className="btn btn-sm btn-outline-warning" to={`/about-us-card/edit/${item.id}`}>
                                                 Edit
                                             </CLink>
-                                            <button type="button" onClick={() => clickOnDelete(item._id)} className="btn btn-sm btn-outline-danger">Delete</button>
+                                            <button type="button" onClick={() => clickOnDelete(item.id)} className="btn btn-sm btn-outline-danger">Delete</button>
                                         </td>
                                     </tr>
                                 )}

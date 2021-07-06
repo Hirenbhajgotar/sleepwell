@@ -93,10 +93,11 @@ const Products = () => {
                             </button>
                         </div> : null}
                         <CDataTable
-                            items={productsData}
+                            items={products}
+                            // items={productsData}
                             fields={[
-                                { key: 'name', _classes: 'font-weight-bold' },
-                                'category', 'sub_category', 'created_at'
+                                { key: 'productName', _classes: 'font-weight-bold' },
+                                'category', 'subCategory', 'subSubCategory'
                             ]}
                             hover
                             striped
@@ -118,7 +119,8 @@ const Products = () => {
                         <CPagination
                             activePage={page}
                             onActivePageChange={pageChange}
-                            pages={2}
+                            pages={1}
+                            // pages={products.length}
                             doubleArrows={false}
                             align="center"
                         />
