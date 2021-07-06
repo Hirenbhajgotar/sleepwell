@@ -163,6 +163,7 @@ const EditSubSubCategory = () => {
     const onHandlerSubmit = (e) => {
         const formData = new FormData();
         let status = isFeatured ? 1 : 0;
+        let addToHome = setInHome ? 1 : 0;
         formData.append('status', status);
         formData.append('categoryId', e.categoryId);
         formData.append('subCategoryId', e.subCategoryId);
@@ -171,6 +172,7 @@ const EditSubSubCategory = () => {
         formData.append('buttonText', buttonText);
         formData.append('buttonLink', buttonLink);
         formData.append('tagLine', description);
+        formData.append('addToHome', addToHome);
 
         setError(null);
         setLoading(true);

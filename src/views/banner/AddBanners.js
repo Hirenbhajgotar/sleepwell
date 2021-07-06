@@ -41,6 +41,7 @@ const AddBanner = () => {
     const [bannerButtonText, setBannerButtonText] = useState('');
     const [bannerButtonLink, setBannerButtonLink] = useState('');
     const [stateArray, setStateArray] = useState();
+    const [states, setStates] = useState([]);
     const [textMessage, setTextMessage] = useState('');
 
 
@@ -75,7 +76,7 @@ const AddBanner = () => {
     }
 
     const handleStateSelect = (e) => {
-        console.log(e);
+        setStates(e);
     }
 
     //* Get state api
@@ -108,13 +109,15 @@ const AddBanner = () => {
         setLoading(true);
 
         const formData = new FormData();
+        const status = isFeatured ? 1 : 0;
+        formData.append('status', status);
         formData.append('image', bannerImage);
         formData.append('shortOrder', shortOrder);
         formData.append('title', title);
         formData.append('description', description);
         formData.append('buttonText', bannerButtonText);
         formData.append('buttonLink', bannerButtonLink);
-        formData.append('status', isFeatured);
+        formData.append('states', states);
         // formData.append('content', content);
         // console.log(formData);
 
@@ -208,25 +211,8 @@ const AddBanner = () => {
                                                     displayValue="state" // Property name to display in the dropdown options
                                                 />
                                             </CInputGroup>
-                                            <CFormText className="help-block text-danger" color="red">{errors.productId && errors.productId.message}</CFormText>
                                         </CFormGroup>
                                     </CCol>
-                                    <CCol xs="6">
-                                        <CFormGroup>
-                                            <CLabel htmlFor="category">Select city</CLabel>
-                                            <CInputGroup className="mb-3">
-                                                <Multiselect
-                                                    options={stateArray} // Options to display in the dropdown
-                                                    // selectedValues={this.state.selectedValue} // Preselected value to persist in dropdown
-                                                    onSelect={handleStateSelect} // Function will trigger on select event
-                                                    displayValue="state" // Property name to display in the dropdown options
-                                                />
-                                            </CInputGroup>
-                                            <CFormText className="help-block text-danger" color="red">{errors.productId && errors.productId.message}</CFormText>
-                                        </CFormGroup>
-                                    </CCol>
-                                </CRow>
-                                <CRow>
                                     <CCol xl="6">
                                         <CFormGroup>
                                             <CLabel htmlFor="shortItem">Sort Order</CLabel>

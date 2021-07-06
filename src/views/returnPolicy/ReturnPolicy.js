@@ -17,23 +17,21 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const ReturnPolicy = () => {
-    const [termsConditionsResult, setTermsConditionsResult] = useState([])
+    const [returnPolicyResult, setReturnPolicyResult] = useState([])
     const [showAlertSuccess, setShowAlertSuccess] = useState(false);
     const [showAlertDanger, setShowAlertDanger] = useState(false);
     const [textMessage, setTextMessage] = useState('');
 
-
     let jwtToken = sessionStorage.getItem("token");
 
-    // 
-    const clickOnDelete = (sizeId) => {
+    const clickOnDelete = (returnPolicyId) => {
         confirmAlert({
             title: 'Are you sure?',
             message: 'You want to delete this item?',
             buttons: [
                 {
                     label: 'Yes, Delete it',
-                    onClick: () => deleteSize(sizeId)
+                    onClick: () => deleteReturnPolicy(returnPolicyId)
                 },
                 {
                     label: 'No',
@@ -43,8 +41,12 @@ const ReturnPolicy = () => {
         });
     }
     //* call delete api
-    const deleteSize = (sizeId) => {
-        axios.delete(`/size/${sizeId}`)
+    const deleteReturnPolicy = (returnPolicyId) => {
+        axios.delete(`http://markbran.in/apis/admin/returnPolicy/${returnPolicyId}`, {
+            headers: {
+                "auth-token": jwtToken //the token is a variable which holds the token
+            }
+        })
             .then(function (response) {
                 setShowAlertSuccess(true);
                 setShowAlertDanger(false);
@@ -53,6 +55,7 @@ const ReturnPolicy = () => {
             .catch(function (error) {
                 setShowAlertSuccess(false);
                 setShowAlertDanger(true);
+                setTextMessage(error.response.data.message);
             })
     }
 
@@ -63,8 +66,8 @@ const ReturnPolicy = () => {
             }
         })
             .then(function (response) {
-                // setTermsConditionsResult(response.data.termsConditions);
-                console.log(response.data);
+                setReturnPolicyResult(response.data.policies);
+                console.log(response.data.policies);
                 // console.log(response.data.termsConditions);
             })
             .catch(function (error) {
@@ -114,18 +117,18 @@ const ReturnPolicy = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {termsConditionsResult.map((item, index) =>
-                                    <tr key={item._id}>
+                                {returnPolicyResult.map((item, index) =>
+                                    <tr key={item.id}>
                                         <th scope="row">{index + 1}</th>
-                                        <td>{item.title}</td>
+                                        <td>{item.heading}</td>
                                         <td>{item.description}</td>
                                         {/* <td>{item.status ? 'Anabel' : 'Disable'}</td> */}
                                         <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
                                         <td>
-                                            <CLink className="btn btn-sm btn-outline-warning" to={`/sizes/edit-size/${item._id}`}>
+                                            <CLink className="btn btn-sm btn-outline-warning" to={`/return-policy/edit/${item.id}`}>
                                                 Edit
                                             </CLink>
-                                            <button onClick={() => clickOnDelete(item._id)} type="button" className="btn btn-sm btn-outline-danger">Delete</button>
+                                            <button onClick={() => clickOnDelete(item.id)} type="button" className="btn btn-sm btn-outline-danger">Delete</button>
                                         </td>
                                     </tr>
                                 )}

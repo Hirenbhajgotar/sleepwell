@@ -91,9 +91,9 @@ const AboutBanner = () => {
                 <CCard>
                     <CCardHeader>
                         About Us
-                        <CLink style={{ float: 'right' }} className="btn btn-success" to="/about-us-banner/add">
+                        {/* <CLink style={{ float: 'right' }} className="btn btn-success" to="/about-us-banner/add">
                             Add Content
-                        </CLink>
+                        </CLink> */}
                         {/* <small  className="text-muted"> example</small> */}
                     </CCardHeader>
                     <CCardBody>

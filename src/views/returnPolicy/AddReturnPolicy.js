@@ -97,7 +97,7 @@ const AddReturnPolicy = () => {
                                 <CRow>
                                     <CCol xs="6">
                                         <CFormGroup>
-                                            <CLabel htmlFor="Title">Title</CLabel>
+                                            <CLabel htmlFor="Heading">Heading</CLabel>
                                             <CInputGroup className="mb-3">
                                                 <CInput {...register('Heading')} type="text" placeholder="Add Heading" autoComplete="Heading" />
                                             </CInputGroup>

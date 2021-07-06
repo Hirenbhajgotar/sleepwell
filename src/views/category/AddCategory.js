@@ -37,24 +37,13 @@ const AddCategory = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [isFeatured, setIsFeatured] = useState(false);
-    const [categoryImage, setCategoryImage] = useState('');
-    const [buttonText, setButtonText] = useState('');
-    const [buttonLink, setButtonLink] = useState('');
+    const [categoryImage, setCategoryImage] = useState(''); 
     const [description, setDescription] = useState('');
 
     //* description
     const descriptionOnChange = (e) => {
         setDescription(e.target.value);
     }
-    //* button text
-    const buttonTextOnChange = (e) => {
-        setButtonText(e.target.value);
-    }
-    //* button text
-    const buttonLinkOnChange = (e) => {
-        setButtonLink(e.target.value);
-    }
-
     //* category image
     const categoryOnChange = (e) => {
         setCategoryImage(e.target.files[0]);
@@ -73,8 +62,6 @@ const AddCategory = () => {
         formData.append('title', e.categoryName);
         // formData.append('category', 'last long');
         formData.append('image', categoryImage);
-        formData.append('buttonText', buttonText);
-        formData.append('buttonLink', buttonLink);
         formData.append('description', description);
         // formData.append('status', 1);
         
@@ -153,24 +140,7 @@ const AddCategory = () => {
                                         </CInputGroup>
                                     </CCol>
                                 </CRow>
-                                <CRow>
-                                    <CCol xl="6">
-                                        <CFormGroup>
-                                            <CLabel htmlFor="Button Text">Button Text</CLabel>
-                                            <CInputGroup>
-                                                <CInput type="text" onChange={buttonTextOnChange} value={buttonText} placeholder="Button Text" autoComplete="Button Text" />
-                                            </CInputGroup>
-                                        </CFormGroup>
-                                    </CCol>
-                                    <CCol xl="6">
-                                        <CFormGroup>
-                                            <CLabel htmlFor="Button Link">Button Link</CLabel>
-                                            <CInputGroup>
-                                                <CInput type="text" onChange={buttonLinkOnChange} value={buttonLink} placeholder="Button Link" autoComplete="Button Link" />
-                                            </CInputGroup>
-                                        </CFormGroup>
-                                    </CCol>
-                                </CRow>
+                                
                                 <CRow>
                                     <CCol xl="12">
                                         <CFormGroup>

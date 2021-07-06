@@ -37,12 +37,16 @@ const AddOfferBanner = () => {
     const [showInHome, setShowInHome] = useState(false);
     const [title, setTitle] = useState('');
     const [stateArray, setStateArray] = useState();
+    const [states, setStates] = useState([]);
+
     const [textMessage, setTextMessage] = useState('');
 
 
     const jwtToken = sessionStorage.getItem("token");
 
- 
+    const handleStateSelect = (e) => {
+        setStates(e);
+    }
     //* banner
     const bannerOnChange = (e) => {
         setBannerImage(e.target.files[0]);
@@ -87,7 +91,7 @@ const AddOfferBanner = () => {
         // console.log('value', value);
         // console.log('bannerImage', bannerImage);
         setError(null);
-        setLoading(true);
+        // setLoading(true);
 
         const formData = new FormData();
         formData.append('image', bannerImage);
@@ -153,6 +157,21 @@ const AddOfferBanner = () => {
                                             </CLabel>
                                             <CInputFile onChange={bannerOnChange} custom id="bannerImage" type="file" />
                                         </CInputGroup>
+                                    </CCol>
+                                </CRow>
+                                <CRow>
+                                    <CCol xs="6">
+                                        <CFormGroup>
+                                            <CLabel htmlFor="category">Select State</CLabel>
+                                            <CInputGroup className="mb-3">
+                                                <Multiselect
+                                                    options={stateArray} // Options to display in the dropdown
+                                                    // selectedValues={this.state.selectedValue} // Preselected value to persist in dropdown
+                                                    onSelect={handleStateSelect} // Function will trigger on select event
+                                                    displayValue="state" // Property name to display in the dropdown options
+                                                />
+                                            </CInputGroup>
+                                        </CFormGroup>
                                     </CCol>
                                 </CRow>
                                 <CRow>

@@ -13,8 +13,6 @@ import {
 } from '@coreui/react'
 import axios from 'axios'
 import dateFormat from 'dateformat'
-import { confirmAlert } from 'react-confirm-alert'
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const States = () => {
     const [states, setStates] = useState([])
@@ -24,41 +22,6 @@ const States = () => {
 
     const jwtToken = sessionStorage.getItem("token");
 
-
-    // 
-    const clickOnDelete = (stateId) => {
-        confirmAlert({
-            title: 'Are you sure?',
-            message: 'You want to delete this item?',
-            buttons: [
-                {
-                    label: 'Yes, Delete it',
-                    onClick: () => deleteState(stateId)
-                },
-                {
-                    label: 'No',
-                    // onClick: () => alert('Click No')
-                }
-            ]
-        });
-    }
-    //* call delete api
-    const deleteState = (stateId) => {
-        axios.delete(`http://markbran.in/apis/admin/state/${stateId}`, {
-            headers: {
-                "auth-token": jwtToken //the token is a variable which holds the token
-            }
-        })
-            .then(function (response) {
-                setShowAlertSuccess(true);
-                setShowAlertDanger(false);
-                axiosCategories();
-            })
-            .catch(function (error) {
-                setShowAlertSuccess(false);
-                setShowAlertDanger(true);
-            })
-    }
 
     const axiosCategories = () => {
         axios.get('http://markbran.in/apis/admin/state', {
@@ -127,7 +90,6 @@ const States = () => {
                                             <CLink className="btn btn-sm btn-outline-warning" to={`/states/edit-states/${item.id}`}>
                                                 Edit
                                             </CLink>
-                                            <button onClick={() => clickOnDelete(item.id)} type="button" className="btn btn-sm btn-outline-danger">Delete</button>
                                         </td>
                                     </tr>
                                 )}

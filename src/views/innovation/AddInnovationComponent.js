@@ -49,7 +49,7 @@ const AddInnovationComponent = () => {
         formData.append('description', description);
 
         setError(null);
-        setLoading(true)
+        // setLoading(true)
 
         // axios.post('http://markbran.in/apis/admin/category', formData, {
         //     headers: {

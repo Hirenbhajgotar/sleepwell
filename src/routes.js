@@ -148,9 +148,11 @@ const AddComfortHome = React.lazy(() => import('./views/comfortHome/AddComfortHo
 const EditComfort = React.lazy(() => import('./views/comfortHome/EditComfort'));
 const ReturnPolicy = React.lazy(() => import('./views/returnPolicy/ReturnPolicy'));
 const AddReturnPolicy = React.lazy(() => import('./views/returnPolicy/AddReturnPolicy'));
+const EditReturnPolicy = React.lazy(() => import('./views/returnPolicy/EditReturnPolicy'));
 const ServiceCard = React.lazy(() => import('./views/serviceCard/ServiceCard'));
 const AddServiceCard = React.lazy(() => import('./views/serviceCard/AddServiceCard'));
 const EditServiceCard = React.lazy(() => import('./views/serviceCard/EditServiceCard'));
+const ServicesAtHome = React.lazy(() => import('./views/serviceAtHome/ServicesAtHome'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -308,9 +310,11 @@ const routes = [
   { path: '/comfort-home/edit/:id', name: 'Edit Comfort Home', component: EditComfort, exact: true },
   { path: '/return-policy', name: 'Return policy', component: ReturnPolicy, exact: true },
   { path: '/return-policy/add', name: 'Add Return policy', component: AddReturnPolicy, exact: true },
+  { path: '/return-policy/edit/:id', name: 'Edit Return policy', component: EditReturnPolicy, exact: true },
   { path: '/service-card', name: 'Service Card', component: ServiceCard, exact: true },
   { path: '/service-card/add', name: 'Add Service Card', component: AddServiceCard, exact: true },
   { path: '/service-card/edit/:id', name: 'Edit Service Card', component: EditServiceCard, exact: true },
+  { path: '/services-at-home', name: 'Services At Home', component: ServicesAtHome, exact: true },
 
 ];
 

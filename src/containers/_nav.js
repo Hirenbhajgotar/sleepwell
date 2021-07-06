@@ -649,6 +649,11 @@ const _nav = [
                 name: 'Pages',
                 to: '/service-page',
             },
+            {
+                _tag: 'CSidebarNavItem',
+                name: 'Services At Home',
+                to: '/services-at-home',
+            },
         ],
     },
     {

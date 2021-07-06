@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef } from 'react'
+import React, { useState, Fragment, useRef, useEffect } from 'react'
 import {
     CCard,
     CCardBody,
@@ -21,7 +21,7 @@ import {
 // import { Editor } from "react-draft-wysiwyg";
 // import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useHistory } from 'react-router';
@@ -38,12 +38,16 @@ const schema = yup.object().shape({
 const AddTernsNConditions = () => {
     // const leftEditorValueRef = useRef(null);
 
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'all', resolver: yupResolver(schema) });
+    const { register, handleSubmit, control, setValue, formState: { errors } } = useForm({ mode: 'all', resolver: yupResolver(schema) });
     let history = useHistory();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [isActive, setIsActive] = useState(true);
     const [pageDescription, setPageDescription] = useState('');
+    const [termsConditions, setTermsConditions] = useState('');
+    const [title, setTitle] = useState('');
+    const [editorData, setEditorData] = useState('');
+
     const [inputList, setInputList] = useState([{ heading: "", sectionDescription: "", status: true }]);
 
     let jwtToken = sessionStorage.getItem("token");
@@ -77,6 +81,36 @@ const AddTernsNConditions = () => {
         setIsActive(e);
     }
    
+    const getTCAxios = () => {
+        axios.get(`http://markbran.in/apis/admin/termsConditions`, {
+            headers: {
+                "auth-token": jwtToken //the token is a variable which holds the token
+            }
+        })
+            .then(function (response) {
+                console.log(response.data.termsConditions);
+                setTermsConditions(response.data.termsConditions);
+                setError(null);
+            })
+            .catch(function (err) {
+                // handle error
+                if (err.response && err.response.data.message) {
+                    setError(err.response.data.message);
+                } else {
+                    setError("Something went wrong!");
+                }
+            });
+    }
+
+    useEffect(() => {
+        getTCAxios();
+        if (termsConditions) {
+            setValue("title", termsConditions.title)
+        }
+        setIsActive(termsConditions.status);
+        setEditorData(termsConditions.description);
+
+    }, [termsConditions.description, termsConditions.status, termsConditions.title]);
 
     const onHandlerSubmit = (e) => {
         let status = isActive ? 1 : 0;
@@ -135,24 +169,35 @@ const AddTernsNConditions = () => {
                                         <CFormGroup>
                                             <CLabel htmlFor="title">Title</CLabel>
                                             <CInputGroup className="mb-3">
-                                                <CInput {...register('title')} type="text" placeholder="Add title" autoComplete="title" />
+                                                <Controller
+                                                    name="title"
+                                                    control={control}
+                                                    defaultValue={''}
+                                                    rules={{
+                                                        required: {
+                                                            value: true,
+                                                            message: "Title is required"
+                                                        },
+                                                    }}
+                                                    render={({ field }) => <CInput {...field} type="text" placeholder="Add title" autoComplete="title" />}
+                                                />
+                                                
                                             </CInputGroup>
                                             <CFormText className="help-block text-danger" color="red">{errors.title && errors.title.message}</CFormText>
                                         </CFormGroup>
                                     </CCol>
                                 </CRow>
-                                <CkEditor onEditorValue={handleDescription}  />
-                                <CRow className="my-3">
+                                <CkEditor onEditorValue={handleDescription} editorValue={editorData} />
+                                {/* <CRow className="my-3">
                                     <CCol xl="6">
                                         <CFormGroup>
                                             <CLabel htmlFor="is_active">Status</CLabel>
                                             <CInputGroup>
-                                                {/* <CSwitch onChange={switch2} checked={switchState} className={'mx-1'} color={'success'} defaultChecked variant="opposite" /> */}
                                                 <Switch onChange={onChangeIsActive} checked={isActive} />
                                             </CInputGroup>
                                         </CFormGroup>
                                     </CCol>
-                                </CRow>
+                                </CRow> */}
                                 <CRow className="my-4">
                                     <hr />
                                     <CCol xs="12">

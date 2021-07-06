@@ -36,6 +36,7 @@ const AddFaq = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [isActive, setIsActive] = useState(true);
+    const [addToHome, setAddToHome] = useState(false);
     const [showAlertSuccess, setShowAlertSuccess] = useState(false);
     const [showAlertDanger, setShowAlertDanger] = useState(false);
     const [textMessage, setTextMessage] = useState('');
@@ -48,6 +49,9 @@ const AddFaq = () => {
 
     const onChangeIsActive = (e) => {
         setIsActive(e);
+    }
+    const onChangeAddToHome = (e) => {
+        setAddToHome(e);
     }
 
     //* faq categories
@@ -76,7 +80,9 @@ const AddFaq = () => {
     const onHandlerSubmit = (e) => {
         const formData = new FormData();
         let status = isActive ? 1 : 0 ;
+        let addHome = addToHome ? 1 : 0;
         formData.append('status', status);
+        formData.append('addToHome', addHome);
         formData.append('question', e.question);
         formData.append('answer', e.answer);
         formData.append('categoryId', e.categoryId);
@@ -167,6 +173,14 @@ const AddFaq = () => {
                                             <CLabel htmlFor="is_active">Status</CLabel>
                                             <CInputGroup>
                                                 <Switch onChange={onChangeIsActive} checked={isActive} />
+                                            </CInputGroup>
+                                        </CFormGroup>
+                                    </CCol>
+                                    <CCol xl="6">
+                                        <CFormGroup>
+                                            <CLabel htmlFor="is_active">Add to home</CLabel>
+                                            <CInputGroup>
+                                                <Switch onChange={onChangeAddToHome} checked={addToHome} />
                                             </CInputGroup>
                                         </CFormGroup>
                                     </CCol>

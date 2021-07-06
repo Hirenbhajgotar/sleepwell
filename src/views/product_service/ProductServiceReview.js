@@ -133,9 +133,9 @@ const ProductServiceReview = () => {
                 <CCard>
                     <CCardHeader>
                         Product/Service Reviews
-                        <CLink style={{ float: 'right' }} className="btn btn-success" to="/product-service-review/add">
+                        {/* <CLink style={{ float: 'right' }} className="btn btn-success" to="/product-service-review/add">
                             Add
-                        </CLink>
+                        </CLink> */}
                     </CCardHeader>
                     <CCardBody>
                         {showAlertSuccess ? <div className="alert alert-success alert-dismissible fade show" role="alert">

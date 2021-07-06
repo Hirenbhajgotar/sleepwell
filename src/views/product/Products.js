@@ -25,6 +25,10 @@ const Products = () => {
     const [page, setPage] = useState(currentPage)
     const [products, setProducts] = useState([]);
 
+    const [showAlertSuccess, setShowAlertSuccess] = useState(false);
+    const [showAlertDanger, setShowAlertDanger] = useState(false);
+    const [textMessage, setTextMessage] = useState('');
+
     const jwtToken = sessionStorage.getItem("token");
 
 
@@ -39,12 +43,15 @@ const Products = () => {
             }
         })
             .then(function (response) {
-                console.log(response.data);
-                // setProducts(response.data.categories);
+                console.log(response.data.products);
+                setProducts(response.data.products);
             })
             .catch(function (error) {
-                // handle error
-                console.log(error);
+                if (error.response && error.response.data.message) {
+                    setShowAlertSuccess(false);
+                    setShowAlertDanger(true);
+                    setTextMessage(error.response.data.message);
+                }
             });
     }
     useEffect(() => {
@@ -73,6 +80,18 @@ const Products = () => {
                       {/* <small  className="text-muted"> example</small> */}
                     </CCardHeader>
                     <CCardBody>
+                        {showAlertSuccess ? <div className="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Deleted</strong> Your item has been deleted successfully.
+                            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div> : null}
+                        {showAlertDanger ? <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>Alert </strong> {textMessage ? textMessage : 'Something went wrong try again later !.'}
+                            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div> : null}
                         <CDataTable
                             items={productsData}
                             fields={[

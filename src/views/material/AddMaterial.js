@@ -58,8 +58,8 @@ const AddMaterial = () => {
 
     const onHandlerSubmit = (e) => {
         const formData = new FormData();
-        // let status = isFeatured ? 1 : 0;
-        // formData.append('status', status);
+        let status = isFeatured ? 1 : 0;
+        formData.append('status', status);
         formData.append('title', e.title);
         formData.append('image', materialImage);
 
@@ -127,7 +127,7 @@ const AddMaterial = () => {
                                         </CInputGroup>
                                     </CCol>
                                 </CRow>
-                                {/* <CRow>
+                                <CRow>
                                     <CCol xl="6">
                                         <CFormGroup>
                                             <CLabel htmlFor="category">Status</CLabel>
@@ -136,7 +136,7 @@ const AddMaterial = () => {
                                             </CInputGroup>
                                         </CFormGroup>
                                     </CCol>
-                                </CRow> */}
+                                </CRow>
                                 <CRow>
                                     <CCol xs="8">
                                         <button className="btn btn-success" disabled={loading ? true : false} type="submit">{loading ? 'Loading...' : 'Add material'}</button>

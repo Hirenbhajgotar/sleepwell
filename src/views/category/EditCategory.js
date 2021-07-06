@@ -42,21 +42,11 @@ const EditCategory = () => {
     const [categoryState, setCategoryState] = useState([]);
     const [category, setCategory] = useState('');
     const [categoryImage, setCategoryImage] = useState('');
-    const [buttonText, setButtonText] = useState('');
-    const [buttonLink, setButtonLink] = useState('');
     const [description, setDescription] = useState('');
 
     //* description
     const descriptionOnChange = (e) => {
         setDescription(e.target.value);
-    }
-    //* button text
-    const buttonTextOnChange = (e) => {
-        setButtonText(e.target.value);
-    }
-    //* button text
-    const buttonLinkOnChange = (e) => {
-        setButtonLink(e.target.value);
     }
 
     //* category image
@@ -101,19 +91,15 @@ const EditCategory = () => {
             setValue("category", categoryState.title)
         }
         setIsFeatured(categoryState.status);
-        setButtonLink(categoryState.buttonLink);
-        setButtonText(categoryState.buttonText);
         setDescription(categoryState.description);
 
-    }, [categoryState.title, categoryState.status, categoryState.buttonLink, categoryState.buttonText, categoryState.description]);
+    }, [categoryState.title, categoryState.status, categoryState.description]);
 
     const onHandlerSubmit = (e) => {
         const formData = new FormData();
         formData.append('status', isFeatured);
         formData.append('title', e.category);
         formData.append('image', categoryImage);
-        formData.append('buttonText', buttonText);
-        formData.append('buttonLink', buttonLink);
         formData.append('description', description);
         // console.log('value', value.categoryName);
         setError(null);
@@ -195,24 +181,6 @@ const EditCategory = () => {
                                     <CCol xs="1">
                                         {/* <img src={`${window.location.origin}/images/category/${categoryState.image}`} className="img-fluid" alt="" /> */}
                                         <img src={`${window.location.origin}/${categoryState.image}`} className="img-fluid" alt="" />
-                                    </CCol>
-                                </CRow>
-                                <CRow>
-                                    <CCol xl="6">
-                                        <CFormGroup>
-                                            <CLabel htmlFor="Button Text">Button Text</CLabel>
-                                            <CInputGroup>
-                                                <CInput type="text" onChange={buttonTextOnChange} value={buttonText} placeholder="Button Text" autoComplete="Button Text" />
-                                            </CInputGroup>
-                                        </CFormGroup>
-                                    </CCol>
-                                    <CCol xl="6">
-                                        <CFormGroup>
-                                            <CLabel htmlFor="Button Link">Button Link</CLabel>
-                                            <CInputGroup>
-                                                <CInput type="text" onChange={buttonLinkOnChange} value={buttonLink} placeholder="Button Link" autoComplete="Button Link" />
-                                            </CInputGroup>
-                                        </CFormGroup>
                                     </CCol>
                                 </CRow>
                                 <CRow>
